@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 import '../../widgets/editar.dart';
 
@@ -11,6 +12,10 @@ class ServiciosSeccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+
+    final lista_1 = miradorProvider.mirador.servicios;
+    final lista_2 = sesionProvider.mirador.servicios;
 
     if (miradorProvider.serviciosController.text.isEmpty) {
       miradorProvider.serviciosController.text = miradorProvider.mirador.servicios.join('\n');
@@ -41,7 +46,8 @@ class ServiciosSeccion extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: miradorProvider.serviciosEdit
                   ? TextFieldServiciosMirador(
-                    hintText: 'Escriba cada servicio separado por un salto de linea.',
+                    hintText:
+                    'Escriba cada servicio separado por un salto de linea.',
                     controller: miradorProvider.serviciosController,
                     focusNode: miradorProvider.serviciosFocusNode,
                   )

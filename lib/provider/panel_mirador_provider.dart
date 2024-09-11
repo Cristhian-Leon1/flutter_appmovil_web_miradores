@@ -202,6 +202,7 @@ class PanelMiradorProvider with ChangeNotifier {
   Future<void> pickImageFromGallery(BuildContext context) async {
     cambiarMarcaImagenEdit();
     await _imagePickerService.pickImageFromGallery(mirador);
+    notifyListeners();
   }
 
   void formatTime(TextEditingController controller) {
@@ -244,9 +245,9 @@ class PanelMiradorProvider with ChangeNotifier {
   }
 
   void extraerHorarios(TextEditingController controllerHorario1,
-      TextEditingController controllerHorario2,
-      TextEditingController controllerHorario3,
-      TextEditingController controllerHorario4) {
+                       TextEditingController controllerHorario2,
+                       TextEditingController controllerHorario3,
+                       TextEditingController controllerHorario4) {
     final text1 = '${controllerHorario1.text.isEmpty ? '00:00' : controllerHorario1.text} $horario1AmPm';
     final text2 = '${controllerHorario2.text.isEmpty ? '00:00' : controllerHorario2.text} $horario2AmPm';
     final text3 = '${controllerHorario3.text.isEmpty ? '00:00' : controllerHorario3.text} $horario3AmPm';

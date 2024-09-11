@@ -70,7 +70,9 @@ class PanelCentralFragmento extends StatelessWidget {
                           child: Text(
                             image == '' && image_2 == ''
                             ? 'NOMBRE DE MIRADOR'
-                            : name == '' ? name_2.toUpperCase() : name_2 == '' ? name.toUpperCase() : '',
+                            : name == '' ? name_2.toUpperCase()
+                            : name_2 == '' ? name.toUpperCase()
+                            : '',
                             style: const TextStyle(
                               fontSize: 24,
                             ),

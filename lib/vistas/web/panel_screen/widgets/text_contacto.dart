@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 
+import '../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../provider/panel_mirador_provider.dart';
 
 class TextContacto extends StatelessWidget {
@@ -12,6 +13,18 @@ class TextContacto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+
+    final direccion = sesionProvider.mirador.address;
+    final direccion_2 = miradorProvider.mirador.address;
+    final celular = sesionProvider.mirador.phone;
+    final celular_2 = miradorProvider.mirador.phone;
+    final correo = sesionProvider.mirador.email;
+    final correo_2 = miradorProvider.mirador.email;
+    final instagram = sesionProvider.mirador.instagram;
+    final instagram_2 = miradorProvider.mirador.instagram;
+    final facebook = sesionProvider.mirador.facebook;
+    final facebook_2 = miradorProvider.mirador.facebook;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,16 +42,19 @@ class TextContacto extends StatelessWidget {
           ? Padding(
             padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
             child: TextFieldNombreMirador(
-            hintText: 'Dirección',
+            hintText:
+            direccion == '' && direccion_2 == ''
+            ? 'Dirección de contacto.'
+            : direccion_2 == '' ? direccion : direccion_2,
             controller: miradorProvider.addressController,
             focusNode: miradorProvider.addressFocusNode,
             keyboardType: TextInputType.text,
             ),
           )
           : Text(
-            miradorProvider.mirador.address.isEmpty
-            ? 'Dirección del mirador.'
-            : miradorProvider.mirador.address,
+            direccion == '' && direccion_2 == ''
+            ? 'Dirección de contacto.'
+            : direccion_2 == '' ? direccion : direccion_2,
             style: const TextStyle(
               fontSize: 16,
               color: Colors.black,
@@ -49,16 +65,19 @@ class TextContacto extends StatelessWidget {
         ? Padding(
           padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
           child: TextFieldNombreMirador(
-            hintText: 'Celular', 
+            hintText:
+            celular == '' && celular_2 == ''
+            ? 'Celular de contacto.'
+            : celular_2 == '' ? celular : celular_2,
             controller: miradorProvider.phoneController,
             focusNode: miradorProvider.phoneFocusNode,
             keyboardType: TextInputType.text,
           ),
         )
         : Text(
-          miradorProvider.mirador.phone.isEmpty
+          celular == '' && celular_2 == ''
           ? 'Celular de contacto.'
-          : miradorProvider.mirador.phone,
+          : celular_2 == '' ? celular : celular_2,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -69,16 +88,19 @@ class TextContacto extends StatelessWidget {
         ? Padding(
           padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
           child: TextFieldNombreMirador(
-            hintText: 'Correo electrónico',
+            hintText:
+            correo == '' && correo_2 == ''
+            ? 'Correo electrónico.'
+            : correo_2 == '' ? correo : correo_2,
             controller: miradorProvider.emailController,
             focusNode: miradorProvider.emailFocusNode,
             keyboardType: TextInputType.text,
           ),
         )
         : Text(
-          miradorProvider.mirador.email.isEmpty
+          correo == '' && correo_2 == ''
           ? 'Correo electrónico.'
-          : miradorProvider.mirador.email,
+          : correo_2 == '' ? correo : correo_2,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -89,16 +111,19 @@ class TextContacto extends StatelessWidget {
         ? Padding(
           padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
           child: TextFieldNombreMirador(
-            hintText: 'Instagram',
+            hintText:
+            instagram == '' && instagram_2 == ''
+            ? 'Instagram.'
+            : instagram_2 == '' ? instagram : instagram_2,
             controller: miradorProvider.instagramController,
             focusNode: miradorProvider.instagramFocusNode,
             keyboardType: TextInputType.text,
           ),
         )
         : Text(
-          miradorProvider.mirador.instagram.isEmpty
+          instagram == '' && instagram_2 == ''
           ? 'Instagram.'
-          : miradorProvider.mirador.instagram,
+          : instagram_2 == '' ? instagram : instagram_2,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -109,16 +134,19 @@ class TextContacto extends StatelessWidget {
         ? Padding(
           padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
           child: TextFieldNombreMirador(
-            hintText: 'Facebook',
+            hintText:
+            facebook == '' && facebook_2 == ''
+            ? 'Facebook.'
+            : facebook_2 == '' ? facebook : facebook_2,
             controller: miradorProvider.facebookController,
             focusNode: miradorProvider.facebookFocusNode,
             keyboardType: TextInputType.text,
           ),
         )
         : Text(
-          miradorProvider.mirador.facebook.isEmpty
+          facebook == '' && facebook_2 == ''
           ? 'Facebook.'
-          : miradorProvider.mirador.facebook,
+          : facebook_2 == '' ? facebook : facebook_2,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,

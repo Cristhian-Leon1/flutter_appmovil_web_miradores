@@ -4,6 +4,7 @@ import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/editar.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 
@@ -13,7 +14,14 @@ class TituloImagenSeccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+
+    final name = miradorProvider.mirador.name;
+    final name_2 = sesionProvider.mirador.name;
+    final description = miradorProvider.mirador.description;
+    final description_2 = sesionProvider.mirador.description;
     final image = miradorProvider.mirador.image;
+    final image_2 = sesionProvider.mirador.image;
     final imagenUrl = miradorProvider.imagenUrl;
 
     if (miradorProvider.nameController.text.isEmpty) {
@@ -33,7 +41,7 @@ class TituloImagenSeccion extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child: image == null && imagenUrl.isEmpty
+                  child: (image == null && imagenUrl.isEmpty && image_2 == '')
                   ? const Icon(Icons.account_balance_rounded, color: AppColors.azulClaro, size: 120)
                   : Container(
                     width: 120,
@@ -46,11 +54,11 @@ class TituloImagenSeccion extends StatelessWidget {
                       ),
                     ),
                     child: ClipOval(
-                      child: miradorProvider.registrarCheck
-                        ? Image.network(imagenUrl, fit: BoxFit.cover)
-                        : (miradorProvider.imagenEdit == true
+                      child: miradorProvider.imagenEdit
                         ? Image.memory(image, fit: BoxFit.cover)
-                        : Image.network(imagenUrl, fit: BoxFit.cover)
+                        : (miradorProvider.registrarCheck
+                        ? Image.network(imagenUrl, fit: BoxFit.cover)
+                        : Image.network(image_2, fit: BoxFit.cover)
                       ),
                     ),
                   ),
@@ -87,16 +95,19 @@ class TituloImagenSeccion extends StatelessWidget {
                       ? Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: TextFieldNombreMirador(
-                          hintText: 'Ingrese el nuevo nombre del mirador',
+                          hintText:
+                          name == '' && name_2 == ''
+                          ? 'Ingrese el nuevo nombre del mirador'
+                          : name == '' ? name_2.toUpperCase() : name.toUpperCase(),
                           controller: miradorProvider.nameController,
                           focusNode: miradorProvider.nameFocusNode,
                           keyboardType: TextInputType.text,
                         ),
                       )
                       : Text(
-                        miradorProvider.mirador.name.isEmpty
-                        ? 'NOMBRE DEL MIRADOR'
-                        : miradorProvider.mirador.name.toUpperCase(),
+                        name == '' && name_2 == ''
+                        ? 'Ingrese el nuevo nombre del mirador'
+                        : name == '' ? name_2.toUpperCase() : name.toUpperCase(),
                         style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w800,
@@ -110,14 +121,17 @@ class TituloImagenSeccion extends StatelessWidget {
                         alignment: Alignment.topCenter,
                         child: miradorProvider.nombreDescripcionEdit
                         ? TextFieldDescripcionMirador(
-                          hintText: 'Escriba aquí la nueva descripción del mirador',
+                          hintText:
+                          description == '' && description_2 == ''
+                          ? 'Ingrese la nueva descripción del mirador.'
+                          : description == '' ? description_2.toUpperCase() : description.toUpperCase(),
                           controller: miradorProvider.descriptionController,
                           focusNode: miradorProvider.descriptionFocusNode
                         )
                         :  Text(
-                          miradorProvider.mirador.description.isEmpty
-                          ? 'Descripción del mirador.'
-                          : miradorProvider.mirador.description,
+                          description == '' && description_2 == ''
+                          ? 'Descripción del mirador..'
+                          : description == '' ? description_2 : description,
                           textAlign: TextAlign.center,
                           maxLines: 4,
                           style: const TextStyle(
