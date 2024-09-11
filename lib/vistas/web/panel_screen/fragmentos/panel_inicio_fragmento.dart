@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/provider/panel_mirador_provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/card_meses.dart';
 import 'package:pueblito_viajero/vistas/widgets/grafica.dart';
@@ -13,7 +14,11 @@ class PanelCentralFragmento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+    final name = miradorProvider.mirador.name;
+    final name_2 = sesionProvider.mirador.name;
     final image = miradorProvider.imagenUrl;
+    final image_2 = sesionProvider.mirador.image;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Column(
@@ -36,7 +41,7 @@ class PanelCentralFragmento extends StatelessWidget {
                     Expanded(
                         flex: 1,
                         child: Center(
-                          child: image == ''
+                          child: image == '' && image_2 == ''
                           ? const Icon(Icons.account_balance_rounded, color: AppColors.azulClaro, size: 120)
                           : Container(
                             width: 120,
@@ -49,18 +54,24 @@ class PanelCentralFragmento extends StatelessWidget {
                               ),
                             ),
                             child: ClipOval(
-                              child: Image.network(image, fit: BoxFit.cover),
+                              child: Image.network(
+                                image == '' ? image_2 :
+                                image_2 == '' ? image : null,
+                                fit: BoxFit.cover
+                              ),
                             ),
                           ),
                         )
                     ),
-                    const Expanded(
+                    Expanded(
                         flex: 4,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'NOMBRE DE MIRADOR',
-                            style: TextStyle(
+                            image == '' && image_2 == ''
+                            ? 'NOMBRE DE MIRADOR'
+                            : name == '' ? name_2.toUpperCase() : name_2 == '' ? name.toUpperCase() : '',
+                            style: const TextStyle(
                               fontSize: 24,
                             ),
                           ),

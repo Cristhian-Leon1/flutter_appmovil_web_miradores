@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pueblito_viajero/provider/panel_eventos_provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/provider/panel_inicio_provider.dart';
@@ -92,27 +94,57 @@ class MaterialAppWithTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _checkLoginStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido
+            )
+          );
+        } else {
+          final data = snapshot.data as Map<String, dynamic>;
+          final isLoggedIn = data['isLoggedIn'] as bool;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: kIsWeb ? '/web_sesion_registro' : '/splash',
-      routes: <String, WidgetBuilder>{
-        '/splash': (context) => const SplashPage(),
-        '/start': (context) => const StartPage(),
-        '/informacion': (context) => const InformationPage(),
-        '/servicios': (context) => const ServicesPage(),
-        '/iniciar_sesion': (context) => const IniciarSesionPage(),
-        '/iniciar_contrasenia': (context) => const IniciarContraseniaPage(),
-        '/crear_cuenta': (context) => const CrearCuentaPage(),
-        '/crear_cuenta_2': (context) => const CrearCuenta2Page(),
-        '/cargar_imagen': (context) => const UploadImagePage(),
-        '/bienvenida': (context) => const BienvenidaPage(),
-        '/home': (context) => const HomePage(),
+          String initialRoute;
+          if (kIsWeb) {
+            initialRoute = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
+          } else {
+            initialRoute = isLoggedIn ? '/bienvenida' : '/start';
+          }
 
-        '/web_sesion_registro': (context) => const WebSesionRegistroScreen(),
-        '/panel_administrativo': (context) => const PanelScreen(),
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: initialRoute,
+            routes: <String, WidgetBuilder>{
+              '/splash': (context) => const SplashPage(),
+              '/start': (context) => const StartPage(),
+              '/informacion': (context) => const InformationPage(),
+              '/servicios': (context) => const ServicesPage(),
+              '/iniciar_sesion': (context) => const IniciarSesionPage(),
+              '/iniciar_contrasenia': (context) => const IniciarContraseniaPage(),
+              '/crear_cuenta': (context) => const CrearCuentaPage(),
+              '/crear_cuenta_2': (context) => const CrearCuenta2Page(),
+              '/cargar_imagen': (context) => const UploadImagePage(),
+              '/bienvenida': (context) => const BienvenidaPage(),
+              '/home': (context) => const HomePage(),
+              '/web_sesion_registro': (context) => const WebSesionRegistroScreen(),
+              '/panel_administrativo': (context) => const PanelScreen(),
+            },
+          );
+        }
       },
     );
+  }
+
+  Future<Map<String, dynamic>> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    return {
+      'isLoggedIn': isLoggedIn,
+    };
   }
 }
 

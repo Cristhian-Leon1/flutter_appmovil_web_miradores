@@ -59,7 +59,6 @@ class IniciarContraseniaPage extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         const SizedBox(height: 5),
                         inicioSesionProvider.isLoading
                         ? const Center(child: CircularProgressIndicator(color: AppColors.verdeDivertido))

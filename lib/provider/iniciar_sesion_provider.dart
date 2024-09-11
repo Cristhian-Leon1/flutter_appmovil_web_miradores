@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pueblito_viajero/modelos/mirador_modelo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../modelos/usuario_model.dart';
 import '../servicios/autenticacion_service.dart';
 import '../vistas/android/bienvenida/bienvenida_screen.dart';
+import '../vistas/android/iniciar_sesion/iniciar_sesion_screen.dart';
 
 class IniciarSesionProvider with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -27,6 +30,19 @@ class IniciarSesionProvider with ChangeNotifier {
                           isUser: false,
                           phone: '',
                         );
+
+  MiradorModel mirador = MiradorModel(
+                          userId: '',
+                          name: '',
+                          description: '',
+                          address: '',
+                          phone: '',
+                          email: '',
+                          instagram: '',
+                          facebook: '',
+                          servicios: [],
+                          hora: []
+  );
 
   void agregarValor(TextEditingController controller, String tipo) {
     String valor = controller.text;
@@ -55,6 +71,11 @@ class IniciarSesionProvider with ChangeNotifier {
     if (user != null) {
       usuario = user;
       await fetchUserDataFromFirestore(user.id);
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+      await prefs.setString('userId', user.id);
+
       isLoading = false;
       notifyListeners();
       Navigator.of(context).pushAndRemoveUntil(
@@ -66,13 +87,37 @@ class IniciarSesionProvider with ChangeNotifier {
     }
   }
 
+  Future<void> logout(BuildContext context) async {
+    await _autenticacionService.logout();
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('userId');
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => const IniciarSesionPage()),
+          (Route<dynamic> route) => false,
+    );
+  }
+
   Future<void> fetchUserDataFromFirestore(String userId) async {
     try {
       DocumentSnapshot userDoc = await _firestore.collection('Usuarios').doc(userId).get();
       if (userDoc.exists) {
         usuario = UsuarioModel.fromMap(userDoc.data() as Map<String, dynamic>);
         usuario.id = userId;
+
+        QuerySnapshot miradorQuery = await _firestore.collection('Miradores')
+            .where('userId', isEqualTo: userId)
+            .limit(1)
+            .get();
+        if (miradorQuery.docs.isNotEmpty) {
+          DocumentSnapshot miradorDoc = miradorQuery.docs.first;
+          mirador = MiradorModel.fromMap(miradorDoc.data() as Map<String, dynamic>);
+          mirador.userId = userId;
+        }
         notifyListeners();
+        print(mirador.toString());
       }
     } catch (e) {
       print('Error fetching user data: $e');

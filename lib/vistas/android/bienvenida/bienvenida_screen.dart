@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/panel_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../utils/custom/custom_colors.dart';
 import '../home/home_screen.dart';
 
@@ -19,12 +20,30 @@ class _BienvenidaPageState extends State<BienvenidaPage> {
   @override
   void initState() {
     super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    final inicioSesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (isLoggedIn) {
+      String? userId = prefs.getString('userId');
+      if (userId != null && userId.isNotEmpty) {
+        await inicioSesionProvider.fetchUserDataFromFirestore(userId);
+      } else {
+        print('User ID is null or empty');
+      }
+    }
+
     Timer(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => kIsWeb ? const PanelScreen() : const HomePage()),
       );
     });
   }
+
 
   @override
   Widget build(BuildContext context) {

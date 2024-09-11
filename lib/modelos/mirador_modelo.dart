@@ -99,4 +99,9 @@ class MiradorModel {
   void agregarEvento(EventoModel evento) {
     this.eventos.add(evento);
   }
+
+  @override
+  String toString() {
+    return 'MiradorModel(userId: $userId, name: $name, description: $description, address: $address, phone: $phone, email: $email, instagram: $instagram, facebook: $facebook, servicios: $servicios, hora: $hora, eventos: $eventos, image: $image, images: $images, ofertaLaboral: $ofertaLaboral)';
+  }
 }

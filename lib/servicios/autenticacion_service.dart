@@ -30,4 +30,12 @@ class AutenticacionService {
     }
     return null;
   }
+
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      print('Error during logout: $e');
+    }
+  }
 }
