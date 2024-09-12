@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 
 class HorarioSeccion extends StatelessWidget {
@@ -10,6 +11,13 @@ class HorarioSeccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+
+    final horario_1 = miradorProvider.mirador.hora[0];
+    final horario_2 = miradorProvider.mirador.hora[1];
+
+    final horario_3 = sesionProvider.mirador.hora[0];
+    final horario_4 = sesionProvider.mirador.hora[1];
 
     return Card(
       elevation: 3,
@@ -82,9 +90,11 @@ class HorarioSeccion extends StatelessWidget {
                   ),
                 )
                 : Text(
-                  miradorProvider.mirador.hora[0]!.isEmpty
+                  horario_1 == '' && horario_3 == ''
                   ? '0:00 AM - 0:00 PM'
-                  : miradorProvider.mirador.hora[0]!.toUpperCase(),
+                  : horario_1 == '' ? horario_3!.toUpperCase()
+                  : horario_3 == '' ? horario_1!.toUpperCase()
+                  : '',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,
@@ -153,9 +163,11 @@ class HorarioSeccion extends StatelessWidget {
                   ),
                 )
                 : Text(
-                  miradorProvider.mirador.hora[1]!.isEmpty
+                  horario_2 == '' && horario_4 == ''
                   ? '0:00 AM - 0:00 PM'
-                  : miradorProvider.mirador.hora[1]!.toUpperCase(),
+                  : horario_2 == '' ? horario_4!.toUpperCase()
+                  : horario_4 == '' ? horario_2!.toUpperCase()
+                  : '',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 import '../../widgets/editar.dart';
 import 'dart:typed_data';
@@ -17,6 +18,7 @@ class ImagenesMiradorSeccion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
 
     return Card(
       elevation: 3,

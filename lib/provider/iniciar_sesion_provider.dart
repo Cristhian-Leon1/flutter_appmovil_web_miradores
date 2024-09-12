@@ -117,7 +117,6 @@ class IniciarSesionProvider with ChangeNotifier {
           mirador.userId = userId;
         }
         notifyListeners();
-        print(mirador.toString());
       }
     } catch (e) {
       print('Error fetching user data: $e');

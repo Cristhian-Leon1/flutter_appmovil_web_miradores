@@ -44,8 +44,8 @@ class PanelCentralFragmento extends StatelessWidget {
                           child: image == '' && image_2 == ''
                           ? const Icon(Icons.account_balance_rounded, color: AppColors.azulClaro, size: 120)
                           : Container(
-                            width: 120,
-                            height: 120,
+                            width: 110,
+                            height: 110,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
@@ -68,13 +68,14 @@ class PanelCentralFragmento extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            image == '' && image_2 == ''
+                            name == '' && name_2 == ''
                             ? 'NOMBRE DE MIRADOR'
                             : name == '' ? name_2.toUpperCase()
                             : name_2 == '' ? name.toUpperCase()
                             : '',
                             style: const TextStyle(
                               fontSize: 24,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         )
@@ -155,7 +156,7 @@ class PanelCentralFragmento extends StatelessWidget {
         ),
         Expanded(
           flex: 2,
-          child: screenWidth >= 730
+          child: screenWidth >= 1000
           ? Row(
             children: [
               Expanded(
@@ -169,7 +170,10 @@ class PanelCentralFragmento extends StatelessWidget {
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: const Center(child: Grafica()),
+                    child: const Center(child: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 15),
+                      child: Grafica(),
+                    )),
                   ),
                 ),
               ),

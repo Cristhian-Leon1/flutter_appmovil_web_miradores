@@ -43,34 +43,39 @@ class ServiciosSeccion extends StatelessWidget {
               ),
               Expanded(
                 flex: 10,
-                child: SingleChildScrollView(
-                  child: miradorProvider.serviciosEdit
-                  ? TextFieldServiciosMirador(
-                    hintText:
-                    'Escriba cada servicio separado por un salto de linea.',
-                    controller: miradorProvider.serviciosController,
-                    focusNode: miradorProvider.serviciosFocusNode,
-                  )
-                  : miradorProvider.mirador.servicios.isEmpty || miradorProvider.mirador.servicios[0] == ''
-                    ? const Text(
-                    'Enliste los servicios que ofrece su mirador.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: miradorProvider.serviciosEdit
+                    ? TextFieldServiciosMirador(
+                      hintText:
+                      lista_1.isEmpty && lista_2.isEmpty
+                      ? 'Escriba cada servicio separado por un salto de linea.'
+                      : lista_2.isEmpty ? lista_1.join('\n') : lista_2.join('\n'),
+                      controller: miradorProvider.serviciosController,
+                      focusNode: miradorProvider.serviciosFocusNode,
                     )
-                    : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: miradorProvider.mirador.servicios
-                        .where((servicio) => servicio != null)
-                        .map((servicio) => Text(
-                      servicio!,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    )
-                    ).toList(),
+                    : lista_1.isEmpty && lista_2.isEmpty
+                      ? const Text(
+                      'Enliste los servicios que ofrece su mirador.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      )
+                      : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: (lista_1.isEmpty ? lista_2 : lista_1)
+                          .where((servicio) => servicio != null)
+                          .map((servicio) => Text(
+                        servicio!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      )
+                      ).toList(),
+                    ),
                   ),
                 )
               ),

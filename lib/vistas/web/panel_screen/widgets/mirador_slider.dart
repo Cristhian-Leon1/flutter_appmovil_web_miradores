@@ -15,11 +15,11 @@ class _ImagenesMiradorSeccionWrapperState extends State<ImagenesMiradorSeccionWr
   late PageController _pageController;
   late Timer _timer;
   final List<String> defaultImages = [
-    'assets/imagen1.jpg',
-    'assets/imagen2.jpg',
-    'assets/imagen3.jpg',
-    'assets/imagen4.jpg',
-    'assets/imagen5.jpg',
+    'assets/imagen_vacia.jpg',
+    'assets/imagen_vacia.jpg',
+    'assets/imagen_vacia.jpg',
+    'assets/imagen_vacia.jpg',
+    'assets/imagen_vacia.jpg',
   ];
 
   @override
