@@ -16,13 +16,13 @@ class TituloImagenSeccion extends StatelessWidget {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
     final sesionProvider = Provider.of<IniciarSesionProvider>(context);
 
-    final name = miradorProvider.mirador.name;
-    final name_2 = sesionProvider.mirador.name;
-    final description = miradorProvider.mirador.description;
-    final description_2 = sesionProvider.mirador.description;
+    final name = miradorProvider.mirador.name ?? '';
+    final name_2 = sesionProvider.mirador.name ?? '';
+    final description = miradorProvider.mirador.description ?? '';
+    final description_2 = sesionProvider.mirador.description ?? '';
     final image = miradorProvider.mirador.image;
-    final image_2 = sesionProvider.mirador.image;
-    final imagenUrl = miradorProvider.imagenUrl;
+    final image_2 = sesionProvider.mirador.image ?? '';
+    final imagenUrl = miradorProvider.imagenUrl ?? '';
 
     if (miradorProvider.nameController.text.isEmpty) {
       miradorProvider.nameController.text = miradorProvider.mirador.name;

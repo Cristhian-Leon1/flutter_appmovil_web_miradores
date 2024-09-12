@@ -13,11 +13,11 @@ class HorarioSeccion extends StatelessWidget {
     final miradorProvider = Provider.of<PanelMiradorProvider>(context);
     final sesionProvider = Provider.of<IniciarSesionProvider>(context);
 
-    final horario_1 = miradorProvider.mirador.hora[0];
-    final horario_2 = miradorProvider.mirador.hora[1];
+    final horario_1 = miradorProvider.mirador.hora.isNotEmpty ? miradorProvider.mirador.hora[0] : '';
+    final horario_2 = miradorProvider.mirador.hora.length > 1 ? miradorProvider.mirador.hora[1] : '';
 
-    final horario_3 = sesionProvider.mirador.hora[0];
-    final horario_4 = sesionProvider.mirador.hora[1];
+    final horario_3 = sesionProvider.mirador.hora.isNotEmpty ? sesionProvider.mirador.hora[0] : '';
+    final horario_4 = sesionProvider.mirador.hora.length > 1 ? sesionProvider.mirador.hora[1] : '';
 
     return Card(
       elevation: 3,
@@ -29,15 +29,16 @@ class HorarioSeccion extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('LUNES - VIERNES',
+                const Text(
+                  'LUNES - VIERNES',
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.black,
-                    fontWeight: FontWeight.bold
-                  )
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 miradorProvider.horarioEdit
-                ? Padding(
+                    ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +56,7 @@ class HorarioSeccion extends StatelessWidget {
                           miradorProvider.setHorario1AmPm(newValue!);
                         },
                         items: <String>['AM', 'PM']
-                          .map<DropdownMenuItem<String>>((String value) {
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -79,7 +80,7 @@ class HorarioSeccion extends StatelessWidget {
                           miradorProvider.setHorario2AmPm(newValue!);
                         },
                         items: <String>['AM', 'PM']
-                          .map<DropdownMenuItem<String>>((String value) {
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -89,12 +90,12 @@ class HorarioSeccion extends StatelessWidget {
                     ],
                   ),
                 )
-                : Text(
+                    : Text(
                   horario_1 == '' && horario_3 == ''
-                  ? '0:00 AM - 0:00 PM'
-                  : horario_1 == '' ? horario_3!.toUpperCase()
-                  : horario_3 == '' ? horario_1!.toUpperCase()
-                  : '',
+                      ? '0:00 AM - 0:00 PM'
+                      : horario_1 == '' ? horario_3!.toUpperCase()
+                      : horario_3 == '' ? horario_1!.toUpperCase()
+                      : '',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,
@@ -106,11 +107,11 @@ class HorarioSeccion extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.black,
-                    fontWeight: FontWeight.bold
-                  )
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 miradorProvider.horarioEdit
-                ? Padding(
+                    ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -162,22 +163,22 @@ class HorarioSeccion extends StatelessWidget {
                     ],
                   ),
                 )
-                : Text(
+                    : Text(
                   horario_2 == '' && horario_4 == ''
-                  ? '0:00 AM - 0:00 PM'
-                  : horario_2 == '' ? horario_4!.toUpperCase()
-                  : horario_4 == '' ? horario_2!.toUpperCase()
-                  : '',
+                      ? '0:00 AM - 0:00 PM'
+                      : horario_2 == '' ? horario_4!.toUpperCase()
+                      : horario_4 == '' ? horario_2!.toUpperCase()
+                      : '',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,
                   ),
                 ),
-              ]
+              ],
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

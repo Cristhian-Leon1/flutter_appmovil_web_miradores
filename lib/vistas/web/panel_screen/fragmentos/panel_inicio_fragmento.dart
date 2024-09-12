@@ -41,7 +41,7 @@ class PanelCentralFragmento extends StatelessWidget {
                     Expanded(
                         flex: 1,
                         child: Center(
-                          child: (image == '' && image_2 == '') || (image.isEmpty && image_2.isEmpty)
+                          child: (image == null || image.isEmpty) && (image_2 == null || image_2.isEmpty)
                           ? const Icon(Icons.account_balance_rounded, color: AppColors.azulClaro, size: 120)
                           : Container(
                             width: 110,
