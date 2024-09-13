@@ -22,12 +22,20 @@ class EventosProvider with ChangeNotifier {
 
   bool isLoading = false;
 
+  DateTime? _selectedDay;
+  DateTime? get selectedDay => _selectedDay;
+
+  DateTime _focusedDay = DateTime.now();
+  DateTime get focusedDay => _focusedDay;
+
   EventoModel evento = EventoModel(
     nombre: '',
     precio: 0,
     hora: '',
     descripcion: '',
   );
+
+  Map<DateTime, List<EventoModel>> eventos = {};
 
   void agregarValor(TextEditingController controller, String tipo) {
     String valor = controller.text;
@@ -49,6 +57,26 @@ class EventosProvider with ChangeNotifier {
     }
   }
 
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    _selectedDay = selectedDay;
+    _focusedDay = focusedDay;
+    notifyListeners();
+  }
+
+  void agregarEvento(EventoModel evento) {
+    if (_selectedDay != null) {
+      if (eventos[_selectedDay!] == null) {
+        eventos[_selectedDay!] = [];
+      }
+      eventos[_selectedDay!]!.add(evento);
+      notifyListeners();
+    }
+  }
+
+  List<EventoModel> getEventsForDay(DateTime day) {
+    return eventos[day] ?? [];
+  }
+
   Future<void> pickImageFromGallery() async {
     await _imagePickerService.pickImageFromGallery(evento);
     notifyListeners();
@@ -66,6 +94,7 @@ class EventosProvider with ChangeNotifier {
       evento.actualizarDescripcion(descripcionController.text);
 
       await _miradorService.actualizarEvento(sesionProvider.mirador.userId, evento);
+      agregarEvento(evento);
       evento.image = null;
       limpiarCampos();
     } catch (e) {
