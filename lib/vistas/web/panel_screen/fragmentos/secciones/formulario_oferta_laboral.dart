@@ -62,12 +62,14 @@ class FormularioOfertaLaboral extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: BotonComun(
-                      color: AppColors.azulClaro,
-                      text: 'Actualizar oferta',
-                      onPressed: (){
-              
-                      }
+                    child: ofertaProvider.isLoading
+                    ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                    : BotonComun(
+                        color: AppColors.azulClaro,
+                        text: 'Actualizar oferta',
+                        onPressed: (){
+                          ofertaProvider.subirOfertaLaboral(context);
+                        }
                     ),
                   )
                 ],

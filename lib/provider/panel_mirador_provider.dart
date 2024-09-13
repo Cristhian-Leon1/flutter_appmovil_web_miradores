@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image/image.dart' as img;
+import 'package:provider/provider.dart';
 
+import '../modelos/evento_modelo.dart';
 import '../modelos/mirador_modelo.dart';
-import '../servicios/registro_mirador_service.dart';
+import '../servicios/mirador_service.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
+import 'iniciar_sesion_provider.dart';
 
 class PanelMiradorProvider with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();
@@ -34,7 +36,7 @@ class PanelMiradorProvider with ChangeNotifier {
   final FocusNode horario4FocusNode = FocusNode();
 
   final ImagePickerService _imagePickerService = ImagePickerService();
-  final RegistroMiradorService _registroMiradorService = RegistroMiradorService();
+  final MiradorService _miradorService = MiradorService();
 
 
   PanelMiradorProvider() {
@@ -142,7 +144,6 @@ class PanelMiradorProvider with ChangeNotifier {
       'facebook': mirador.facebook,
       'servicios': mirador.servicios,
       'hora': mirador.hora,
-      'eventos': mirador.eventos.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -200,7 +201,6 @@ class PanelMiradorProvider with ChangeNotifier {
   }
 
   Future<void> pickImageFromGallery(BuildContext context) async {
-    cambiarMarcaImagenEdit();
     await _imagePickerService.pickImageFromGallery(mirador);
     notifyListeners();
   }
@@ -231,13 +231,28 @@ class PanelMiradorProvider with ChangeNotifier {
   }
 
   Future<void> registrarMirador(BuildContext context) async {
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
     isLoading = true;
     registrarCheck = true;
     notifyListeners();
     try {
-      await _registroMiradorService.registrarMirador(context, mirador);
+      await _miradorService.registrarMirador(context, mirador);
+      sesionProvider.tieneMirador =  true;
     } catch (e) {
       print('Error al registrar mirador: $e');
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> actualizarMirador(BuildContext context) async {
+    isLoading = true;
+    notifyListeners();
+    try {
+      await _miradorService.actualizarMirador(context);
+    } catch (e) {
+      print('Error al actualizar mirador: $e');
     } finally {
       isLoading = false;
       notifyListeners();
@@ -301,6 +316,7 @@ class PanelMiradorProvider with ChangeNotifier {
   }
 
   void cambiarMarcaImagenEdit() {
+    imagenEdit = false;
     registrarCheck = false;
     imagenCheck = false;
     imagenEdit = !imagenEdit;

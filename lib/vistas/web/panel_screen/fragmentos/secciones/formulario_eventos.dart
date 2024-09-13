@@ -60,7 +60,7 @@ class FormularioEventos extends StatelessWidget {
                       hintText: 'Hora',
                       icon: Icons.access_time_outlined,
                       controller: eventosProvider.horaController,
-                      keyboard: 'num',
+                      keyboard: 'otro',
                       focusNode: eventosProvider.horaFocusNode,
                       type: '2',
                     ),
@@ -119,10 +119,14 @@ class FormularioEventos extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: BotonComun(
+                    child: eventosProvider.isLoading
+                    ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                    : BotonComun(
                       color: AppColors.azulClaro,
                       text: 'Cargar evento',
-                      onPressed: (){ }
+                      onPressed: () async {
+                        await eventosProvider.actualizarEvento(context);
+                      },
                     ),
                   )
                 ],

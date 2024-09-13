@@ -13,8 +13,6 @@ class MiradorModel {
   String facebook;
   List<String?> servicios;
   List<String?> hora;
-  dynamic ofertaLaboral; // imagen Flyer
-  List<EventoModel> eventos;
 
   MiradorModel({
     required this.userId,
@@ -29,7 +27,6 @@ class MiradorModel {
     required this.facebook,
     required this.servicios,
     required this.hora,
-    this.eventos = const [],
   });
 
   factory MiradorModel.fromMap(Map<String, dynamic> data) {
@@ -46,9 +43,6 @@ class MiradorModel {
       facebook: data['facebook'] ?? '',
       servicios: List<String>.from(data['servicios'] ?? []),
       hora: List<String>.from(data['hora'] ?? ['', '']),
-      eventos: (data['eventos'] as List<dynamic>?)
-          ?.map((e) => EventoModel.fromMap(e as Map<String, dynamic>))
-          .toList() ?? [],
     );
   }
 
@@ -96,12 +90,8 @@ class MiradorModel {
     this.hora = hora;
   }
 
-  void agregarEvento(EventoModel evento) {
-    this.eventos.add(evento);
-  }
-
   @override
   String toString() {
-    return 'MiradorModel(userId: $userId, name: $name, description: $description, address: $address, phone: $phone, email: $email, instagram: $instagram, facebook: $facebook, servicios: $servicios, hora: $hora, eventos: $eventos, image: $image, images: $images, ofertaLaboral: $ofertaLaboral)';
+    return 'MiradorModel(userId: $userId, name: $name, description: $description, address: $address, phone: $phone, email: $email, instagram: $instagram, facebook: $facebook, servicios: $servicios, hora: $hora, image: $image, images: $images)';
   }
 }

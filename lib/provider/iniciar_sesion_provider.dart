@@ -15,6 +15,7 @@ class IniciarSesionProvider with ChangeNotifier {
 
   bool isLoading = false;
   bool authProcess = false;
+  bool tieneMirador = false;
   bool isPasswordVisible = true;
 
   final AutenticacionService _autenticacionService = AutenticacionService();
@@ -112,6 +113,7 @@ class IniciarSesionProvider with ChangeNotifier {
             .limit(1)
             .get();
         if (miradorQuery.docs.isNotEmpty) {
+          tieneMirador = true;
           DocumentSnapshot miradorDoc = miradorQuery.docs.first;
           mirador = MiradorModel.fromMap(miradorDoc.data() as Map<String, dynamic>);
           mirador.userId = userId;

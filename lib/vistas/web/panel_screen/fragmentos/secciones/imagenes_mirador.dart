@@ -43,15 +43,31 @@ class ImagenesMiradorSeccion extends StatelessWidget {
                   },
                   itemBuilder: (context, index) {
                     final image = images[index];
-                    return image is String && image.startsWith('assets/')
-                    ? Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                    )
-                    : Image.memory(
-                      image,
-                      fit: BoxFit.cover,
-                    );
+
+                    // Lógica para determinar el tipo de imagen a mostrar
+                    if (image is String && image.startsWith('assets/')) {
+                      // Mostrar imagen de assets
+                      return Image.asset(
+                        image,
+                        fit: BoxFit.cover,
+                      );
+                    } else if (image is Uint8List) {
+                      // Mostrar imagen en memoria (Image.memory)
+                      return Image.memory(
+                        image,
+                        fit: BoxFit.cover,
+                      );
+                    } else if (image is String && image.startsWith('http')) {
+                      // Mostrar imagen desde la red (Image.network)
+                      return Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('No image available'),
+                      );
+                    }
                   },
                 ),
               ),

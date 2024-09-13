@@ -56,10 +56,9 @@ class TituloImagenSeccion extends StatelessWidget {
                     child: ClipOval(
                       child: miradorProvider.imagenEdit
                         ? Image.memory(image, fit: BoxFit.cover)
-                        : (miradorProvider.registrarCheck
-                        ? Image.network(imagenUrl, fit: BoxFit.cover)
-                        : Image.network(image_2, fit: BoxFit.cover)
-                      ),
+                        : miradorProvider.registrarCheck
+                          ? Image.network(imagenUrl, fit: BoxFit.cover)
+                          : Image.network(image_2, fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -97,7 +96,7 @@ class TituloImagenSeccion extends StatelessWidget {
                         child: TextFieldNombreMirador(
                           hintText:
                           name == '' && name_2 == ''
-                          ? 'Ingrese el nuevo nombre del mirador'
+                          ? 'Ingrese nombre del mirador'
                           : name == '' ? name_2.toUpperCase() : name.toUpperCase(),
                           controller: miradorProvider.nameController,
                           focusNode: miradorProvider.nameFocusNode,
@@ -106,7 +105,7 @@ class TituloImagenSeccion extends StatelessWidget {
                       )
                       : Text(
                         name == '' && name_2 == ''
-                        ? 'Ingrese el nuevo nombre del mirador'
+                        ? 'Ingrese nombre del mirador'
                         : name == '' ? name_2.toUpperCase() : name.toUpperCase(),
                         style: const TextStyle(
                           fontSize: 30,
@@ -168,12 +167,14 @@ class TituloImagenSeccion extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child:
               miradorProvider.isLoading
-              ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-              : BotonComun(
+                  ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                  : BotonComun(
                 color: AppColors.azulClaro,
-                text: 'Actualizar',
+                text: sesionProvider.tieneMirador ? 'Actualizar' : 'Registrar',
                 onPressed: () async {
-                  await miradorProvider.registrarMirador(context);
+                  sesionProvider.tieneMirador
+                    ? await miradorProvider.actualizarMirador(context)
+                    : await miradorProvider.registrarMirador(context);
                 },
               ),
             )
