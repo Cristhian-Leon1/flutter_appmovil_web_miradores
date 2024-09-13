@@ -60,31 +60,13 @@ class SeleccionOpcionesPerfil extends StatelessWidget {
                     title: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.font_download_outlined),
-                        SizedBox(width: 8.0),
-                        Text('Tamaño de la letra'),
-                      ],
-                    ),
-                    onTap: () {
-                      perfilProvider.updateSelectedOption(3);
-                    }
-                ),
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    title: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
                         Icon(Icons.policy_outlined),
                         SizedBox(width: 8.0),
                         Text('Política de privacidad'),
                       ],
                     ),
                     onTap: () {
-                      perfilProvider.updateSelectedOption(4);
+                      perfilProvider.updateSelectedOption(3);
                     }
                 ),
               ),
@@ -102,7 +84,7 @@ class SeleccionOpcionesPerfil extends StatelessWidget {
                       ],
                     ),
                     onTap: () {
-                      perfilProvider.updateSelectedOption(5);
+                      perfilProvider.updateSelectedOption(4);
                     }
                 ),
               ),

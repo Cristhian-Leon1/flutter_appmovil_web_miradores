@@ -51,4 +51,15 @@ class RegistroService {
       print('Error al guardar datos del usuario: $e');
     }
   }
+
+  Future<void> actualizarUsuario(String uid, String name, String phone) async {
+    try {
+      await _firestore.collection('Usuarios').doc(uid).update({
+        'name': name,
+        'phone': phone,
+      });
+    } catch (e) {
+      print('Error al actualizar usuario: $e');
+    }
+  }
 }
