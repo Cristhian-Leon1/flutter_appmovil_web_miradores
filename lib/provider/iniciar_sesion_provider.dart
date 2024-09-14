@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pueblito_viajero/modelos/mirador_modelo.dart';
+import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../modelos/usuario_model.dart';
 import '../servicios/autenticacion_service.dart';
@@ -96,7 +98,7 @@ class IniciarSesionProvider with ChangeNotifier {
     await prefs.remove('userId');
 
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const IniciarSesionPage()),
+      MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const IniciarSesionPage()),
           (Route<dynamic> route) => false,
     );
   }
