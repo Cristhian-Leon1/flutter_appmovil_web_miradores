@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:pueblito_viajero/provider/fragmento_home_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pueblito_viajero/provider/panel_eventos_provider.dart';
@@ -32,6 +34,7 @@ import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_scre
 import 'servicios/firebase_options.dart';
 
 Future<void> main() async {
+  await initializeDateFormatting('es_ES', null);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -83,6 +86,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PerfilProvider>(
           create: (_) => PerfilProvider(),
         ),
+        ChangeNotifierProvider<HomeProvider>(
+          create: (_) => HomeProvider(),
+        ),
       ],
       child: const MaterialAppWithTheme(),
     );
@@ -111,7 +117,7 @@ class MaterialAppWithTheme extends StatelessWidget {
           if (kIsWeb) {
             initialRoute = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
           } else {
-            initialRoute = isLoggedIn ? '/bienvenida' : '/start';
+            initialRoute = isLoggedIn ? '/home' : '/home';
           }
 
           return MaterialApp(

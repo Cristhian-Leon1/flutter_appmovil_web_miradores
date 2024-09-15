@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../../../provider/panel_eventos_provider.dart';
@@ -10,6 +12,7 @@ class CalendarioInteractivo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventosProvider = Provider.of<EventosProvider>(context);
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
     return Card(
       elevation: 3,
@@ -21,12 +24,19 @@ class CalendarioInteractivo extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Center(
           child: TableCalendar(
+            locale: 'es_ES',
             availableCalendarFormats: const {
               CalendarFormat.month: 'Mes',
             },
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2030, 12, 31),
             focusedDay: eventosProvider.focusedDay,
+            headerStyle: HeaderStyle(
+              titleTextFormatter: (date, locale) => capitalize(DateFormat.yMMMM(locale).format(date)),
+            ),
+            daysOfWeekStyle: DaysOfWeekStyle(
+              dowTextFormatter: (date, locale) => capitalize(DateFormat.E(locale).format(date)),
+            ),
             selectedDayPredicate: (day) {
               return isSameDay(eventosProvider.selectedDay, day);
             },
@@ -35,7 +45,7 @@ class CalendarioInteractivo extends StatelessWidget {
             },
             calendarStyle: const CalendarStyle(
               todayDecoration: BoxDecoration(
-                color: AppColors.azulClaro,
+                color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                 shape: BoxShape.circle,
               ),
               selectedDecoration: BoxDecoration(
