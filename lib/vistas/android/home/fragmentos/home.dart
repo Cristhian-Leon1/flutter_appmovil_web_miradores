@@ -25,18 +25,24 @@ class _HomeFragmentoState extends State<HomeFragmento> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 6), (Timer timer) {
-      if (_currentPage < 2) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
 
-      _pageController.animateToPage(
-        _currentPage,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      );
+    // Espera un breve periodo de tiempo antes de iniciar el temporizador
+    Future.delayed(Duration(milliseconds: 100), () {
+      _timer = Timer.periodic(const Duration(seconds: 6), (Timer timer) {
+        if (mounted && _pageController.hasClients) {
+          if (_currentPage < 2) {
+            _currentPage++;
+          } else {
+            _currentPage = 0;
+          }
+
+          _pageController.animateToPage(
+            _currentPage,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeIn,
+          );
+        }
+      });
     });
   }
 

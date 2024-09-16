@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_perfil_provider.dart';
 
 class SeleccionOpcionesPerfil extends StatelessWidget {
@@ -8,6 +10,7 @@ class SeleccionOpcionesPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final perfilProvider = Provider.of<PerfilProvider>(context);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
 
     return Card(
       elevation: 3,
@@ -85,6 +88,24 @@ class SeleccionOpcionesPerfil extends StatelessWidget {
                     ),
                     onTap: () {
                       perfilProvider.updateSelectedOption(4);
+                    }
+                ),
+              ),
+            ),
+            kIsWeb ? const SizedBox() : Expanded(
+              child: Center(
+                child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    title: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.logout),
+                        SizedBox(width: 8.0),
+                        Text('Cerrar sesión'),
+                      ],
+                    ),
+                    onTap: () {
+                      sesionProvider.logout(context);
                     }
                 ),
               ),

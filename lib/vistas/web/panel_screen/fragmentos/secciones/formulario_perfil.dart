@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
@@ -87,7 +88,7 @@ class FormularioPerfil extends StatelessWidget {
                           perfilProvider.isLoading
                           ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
                           : BotonComun(
-                            color: AppColors.azulClaro,
+                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                             text: 'Actualizar',
                             onPressed: (){
                               perfilProvider.actualizarUsuario(
@@ -98,7 +99,7 @@ class FormularioPerfil extends StatelessWidget {
                             }
                           ),
                           BotonComun(
-                            color: AppColors.azulClaro,
+                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                             text: 'Cancelar',
                             onPressed: (){
                               perfilProvider.updateSelectedOption(0);
@@ -133,12 +134,12 @@ class FormularioPerfil extends StatelessWidget {
                       child: Column(
                         children: [
                           BotonComun(
-                            color: AppColors.azulClaro,
+                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                             text: 'Actualizar',
                             onPressed: (){}
                           ),
                           BotonComun(
-                            color: AppColors.azulClaro,
+                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                             text: 'Cancelar',
                             onPressed: (){
                               perfilProvider.updateSelectedOption(0);
@@ -155,47 +156,50 @@ class FormularioPerfil extends StatelessWidget {
                 children: [
                    Expanded(
                       flex: 5,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Política de Privacidad',
-                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 16),
-                            const Text(
-                              'Fecha de entrada en vigor: 13 de septiembre de 2024',
-                              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                            ),
-                            const SizedBox(height: 16),
-                            buildSectionTitle('1. Introducción'),
-                            buildSectionText(
-                              'Bienvenido a [Nombre de la Aplicación]. Nos comprometemos a proteger la privacidad y seguridad de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos, y protegemos tu información personal cuando utilizas nuestra aplicación que proporciona información sobre miradores cercanos y los servicios asociados.',
-                            ),
-                            buildSectionTitle('2. Información que Recopilamos'),
-                            buildSectionSubtitle('2.1. Información que tú nos proporcionas'),
-                            buildSectionText(
-                              '- Información de la cuenta: Cuando te registras en nuestra aplicación, podemos solicitarte información como nombre, dirección de correo electrónico y otros detalles de contacto.\n'
-                                  '- Comentarios y sugerencias: Si nos envías sugerencias, preguntas o comentarios, también recopilaremos esa información para mejorar nuestro servicio.',
-                            ),
-                            buildSectionSubtitle('2.2. Información que recopilamos automáticamente'),
-                            buildSectionText(
-                              '- Datos de geolocalización: Para mostrar miradores cercanos y servicios relacionados (como restaurantes o estacionamientos), solicitamos acceso a tu ubicación en tiempo real. Esta información se usa exclusivamente para ofrecerte una experiencia más precisa.\n'
-                                  '- Información del dispositivo: Podemos recopilar información sobre tu dispositivo, como el modelo, sistema operativo, dirección IP y otra información técnica para mejorar el rendimiento de la aplicación.\n'
-                                  '- Cookies y tecnologías de seguimiento: Utilizamos cookies y tecnologías similares para mejorar la funcionalidad de la aplicación.',
-                            ),
-                            buildSectionTitle('3. Uso de la Información'),
-                            buildSectionText(
-                              'Utilizamos la información que recopilamos para:\n'
-                                  '- Mostrarte miradores y servicios cercanos en función de tu ubicación.\n'
-                                  '- Mejorar la precisión de nuestras recomendaciones.\n'
-                                  '- Ofrecer un servicio más personalizado y relevante.\n'
-                                  '- Comunicarnos contigo sobre actualizaciones de la aplicación o notificaciones importantes.',
-                            ),
-                            // Puedes seguir añadiendo más secciones del acuerdo aquí
-                          ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Política de Privacidad',
+                                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Fecha de entrada en vigor: 13 de septiembre de 2024',
+                                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                              ),
+                              const SizedBox(height: 16),
+                              buildSectionTitle('1. Introducción'),
+                              buildSectionText(
+                                'Bienvenido a [Nombre de la Aplicación]. Nos comprometemos a proteger la privacidad y seguridad de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos, y protegemos tu información personal cuando utilizas nuestra aplicación que proporciona información sobre miradores cercanos y los servicios asociados.',
+                              ),
+                              buildSectionTitle('2. Información que Recopilamos'),
+                              buildSectionSubtitle('2.1. Información que tú nos proporcionas'),
+                              buildSectionText(
+                                '- Información de la cuenta: Cuando te registras en nuestra aplicación, podemos solicitarte información como nombre, dirección de correo electrónico y otros detalles de contacto.\n'
+                                    '- Comentarios y sugerencias: Si nos envías sugerencias, preguntas o comentarios, también recopilaremos esa información para mejorar nuestro servicio.',
+                              ),
+                              buildSectionSubtitle('2.2. Información que recopilamos automáticamente'),
+                              buildSectionText(
+                                '- Datos de geolocalización: Para mostrar miradores cercanos y servicios relacionados (como restaurantes o estacionamientos), solicitamos acceso a tu ubicación en tiempo real. Esta información se usa exclusivamente para ofrecerte una experiencia más precisa.\n'
+                                    '- Información del dispositivo: Podemos recopilar información sobre tu dispositivo, como el modelo, sistema operativo, dirección IP y otra información técnica para mejorar el rendimiento de la aplicación.\n'
+                                    '- Cookies y tecnologías de seguimiento: Utilizamos cookies y tecnologías similares para mejorar la funcionalidad de la aplicación.',
+                              ),
+                              buildSectionTitle('3. Uso de la Información'),
+                              buildSectionText(
+                                'Utilizamos la información que recopilamos para:\n'
+                                    '- Mostrarte miradores y servicios cercanos en función de tu ubicación.\n'
+                                    '- Mejorar la precisión de nuestras recomendaciones.\n'
+                                    '- Ofrecer un servicio más personalizado y relevante.\n'
+                                    '- Comunicarnos contigo sobre actualizaciones de la aplicación o notificaciones importantes.',
+                              ),
+                              // Puedes seguir añadiendo más secciones del acuerdo aquí
+                            ],
+                          ),
                         ),
                       ),
                   ),
@@ -205,7 +209,7 @@ class FormularioPerfil extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         BotonComun(
-                          color: AppColors.azulClaro,
+                          color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                           text: 'Regresar',
                           onPressed: (){
                             perfilProvider.updateSelectedOption(0);
@@ -221,63 +225,66 @@ class FormularioPerfil extends StatelessWidget {
                 children: [
                    Expanded(
                     flex: 5,
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Normas Comunitarias',
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Fecha de entrada en vigor: 13 de septiembre de 2024',
-                            style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                          ),
-                          const SizedBox(height: 16),
-                          buildSectionTitle('1. Introducción'),
-                          buildSectionText(
-                            'En [Nombre de la Aplicación], nos esforzamos por crear una comunidad respetuosa y segura para todos nuestros usuarios. Estas Normas Comunitarias establecen las reglas básicas que deben seguirse al utilizar nuestra plataforma.',
-                          ),
-                          buildSectionTitle('2. Comportamiento Respetuoso'),
-                          buildSectionText(
-                            'Queremos que todos se sientan bienvenidos y respetados. Por lo tanto, los usuarios deben abstenerse de:\n'
-                                '- Publicar contenido ofensivo, amenazante o discriminatorio.\n'
-                                '- Realizar ataques personales o acoso a otros usuarios.\n'
-                                '- Difundir información falsa o malintencionada.',
-                          ),
-                          buildSectionTitle('3. Contenido Apropiado'),
-                          buildSectionText(
-                            'Los usuarios deben asegurarse de que todo el contenido compartido en la plataforma sea apropiado para todos los públicos. Esto incluye:\n'
-                                '- No publicar imágenes o videos con violencia gráfica o contenido explícito.\n'
-                                '- Evitar la difusión de contenido que incite al odio o violencia.\n'
-                                '- Publicar contenido relevante que respete el propósito de la comunidad (por ejemplo, sobre miradores o servicios relacionados).',
-                          ),
-                          buildSectionTitle('4. Privacidad y Seguridad'),
-                          buildSectionText(
-                            'Para proteger la privacidad y seguridad de todos, los usuarios no deben:\n'
-                                '- Compartir información personal de otros sin su consentimiento.\n'
-                                '- Intentar acceder a las cuentas o información privada de otros usuarios.\n'
-                                '- Difundir enlaces maliciosos o software dañino.',
-                          ),
-                          buildSectionTitle('5. Consecuencias de las Infracciones'),
-                          buildSectionText(
-                            'Las infracciones a estas Normas Comunitarias pueden llevar a:\n'
-                                '- Advertencias temporales o permanentes.\n'
-                                '- Suspensión o eliminación de la cuenta.\n'
-                                '- Eliminación de contenido inapropiado.\n\n'
-                                'Nos reservamos el derecho de tomar las acciones necesarias para mantener un ambiente seguro y respetuoso para todos.',
-                          ),
-                          buildSectionTitle('6. Contacto y Denuncias'),
-                          buildSectionText(
-                            'Si encuentras contenido o comportamiento que infrinja estas Normas Comunitarias, puedes denunciarlo directamente en la aplicación o contactarnos a través de [Correo electrónico de soporte].',
-                          ),
-                          buildSectionTitle('7. Cambios en las Normas'),
-                          buildSectionText(
-                            'Nos reservamos el derecho de modificar estas Normas Comunitarias en cualquier momento. Te notificaremos de cualquier cambio a través de la aplicación. El uso continuado de la plataforma después de dichos cambios constituye la aceptación de las nuevas Normas.',
-                          ),
-                        ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Normas Comunitarias',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'Fecha de entrada en vigor: 13 de septiembre de 2024',
+                              style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                            ),
+                            const SizedBox(height: 16),
+                            buildSectionTitle('1. Introducción'),
+                            buildSectionText(
+                              'En [Nombre de la Aplicación], nos esforzamos por crear una comunidad respetuosa y segura para todos nuestros usuarios. Estas Normas Comunitarias establecen las reglas básicas que deben seguirse al utilizar nuestra plataforma.',
+                            ),
+                            buildSectionTitle('2. Comportamiento Respetuoso'),
+                            buildSectionText(
+                              'Queremos que todos se sientan bienvenidos y respetados. Por lo tanto, los usuarios deben abstenerse de:\n'
+                                  '- Publicar contenido ofensivo, amenazante o discriminatorio.\n'
+                                  '- Realizar ataques personales o acoso a otros usuarios.\n'
+                                  '- Difundir información falsa o malintencionada.',
+                            ),
+                            buildSectionTitle('3. Contenido Apropiado'),
+                            buildSectionText(
+                              'Los usuarios deben asegurarse de que todo el contenido compartido en la plataforma sea apropiado para todos los públicos. Esto incluye:\n'
+                                  '- No publicar imágenes o videos con violencia gráfica o contenido explícito.\n'
+                                  '- Evitar la difusión de contenido que incite al odio o violencia.\n'
+                                  '- Publicar contenido relevante que respete el propósito de la comunidad (por ejemplo, sobre miradores o servicios relacionados).',
+                            ),
+                            buildSectionTitle('4. Privacidad y Seguridad'),
+                            buildSectionText(
+                              'Para proteger la privacidad y seguridad de todos, los usuarios no deben:\n'
+                                  '- Compartir información personal de otros sin su consentimiento.\n'
+                                  '- Intentar acceder a las cuentas o información privada de otros usuarios.\n'
+                                  '- Difundir enlaces maliciosos o software dañino.',
+                            ),
+                            buildSectionTitle('5. Consecuencias de las Infracciones'),
+                            buildSectionText(
+                              'Las infracciones a estas Normas Comunitarias pueden llevar a:\n'
+                                  '- Advertencias temporales o permanentes.\n'
+                                  '- Suspensión o eliminación de la cuenta.\n'
+                                  '- Eliminación de contenido inapropiado.\n\n'
+                                  'Nos reservamos el derecho de tomar las acciones necesarias para mantener un ambiente seguro y respetuoso para todos.',
+                            ),
+                            buildSectionTitle('6. Contacto y Denuncias'),
+                            buildSectionText(
+                              'Si encuentras contenido o comportamiento que infrinja estas Normas Comunitarias, puedes denunciarlo directamente en la aplicación o contactarnos a través de [Correo electrónico de soporte].',
+                            ),
+                            buildSectionTitle('7. Cambios en las Normas'),
+                            buildSectionText(
+                              'Nos reservamos el derecho de modificar estas Normas Comunitarias en cualquier momento. Te notificaremos de cualquier cambio a través de la aplicación. El uso continuado de la plataforma después de dichos cambios constituye la aceptación de las nuevas Normas.',
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -287,7 +294,7 @@ class FormularioPerfil extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         BotonComun(
-                          color: AppColors.azulClaro,
+                          color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
                           text: 'Regresar',
                           onPressed: (){
                             perfilProvider.updateSelectedOption(0);

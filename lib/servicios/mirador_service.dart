@@ -159,4 +159,14 @@ class MiradorService {
       return [];
     }
   }
+
+  Future<List<MiradorModel>> obtenerMiradores() async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('Miradores').get();
+      return querySnapshot.docs.map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
+    } catch (e) {
+      print('Error al obtener miradores: $e');
+      return [];
+    }
+  }
 }

@@ -6,6 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:pueblito_viajero/provider/fragmento_home_provider.dart';
+import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
+import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
+import 'package:pueblito_viajero/provider/fragmento_perfil_provider.dart';
+import 'package:pueblito_viajero/provider/fragmento_perfil_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pueblito_viajero/provider/panel_eventos_provider.dart';
@@ -89,6 +93,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<HomeProvider>(
           create: (_) => HomeProvider(),
         ),
+        ChangeNotifierProvider<MiradoresFragmentoProvider>(
+          create: (_) => MiradoresFragmentoProvider(),
+        ),
+        ChangeNotifierProvider<FragmentoPerfilProvider>(
+          create: (_) => FragmentoPerfilProvider(),
+        ),
       ],
       child: const MaterialAppWithTheme(),
     );
@@ -117,7 +127,7 @@ class MaterialAppWithTheme extends StatelessWidget {
           if (kIsWeb) {
             initialRoute = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
           } else {
-            initialRoute = isLoggedIn ? '/home' : '/home';
+            initialRoute = isLoggedIn ? '/home' : '/splash';
           }
 
           return MaterialApp(

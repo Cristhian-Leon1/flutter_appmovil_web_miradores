@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldNombreMirador extends StatelessWidget {
@@ -19,7 +20,7 @@ class TextFieldNombreMirador extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 40,
+          height: kIsWeb ? 40 : 60,
           width: keyboardType == TextInputType.datetime ? 60 : null,
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
@@ -40,9 +41,9 @@ class TextFieldNombreMirador extends StatelessWidget {
             style: const TextStyle(color: Colors.black87),
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.only(left: 8, bottom: 5),
+              contentPadding: const EdgeInsets.only(left: 8, bottom: kIsWeb ? 5 : 0),
               hintText: hintText,
-              hintStyle: const TextStyle(color: Colors.black38),
+              hintStyle: const TextStyle(color: Colors.black38, fontSize: kIsWeb ? null : 18),
             ),
           ),
         ),
