@@ -17,4 +17,18 @@ class MiradoresFragmentoProvider with ChangeNotifier {
     _miradores = await _miradorService.buscarMiradoresPorNombre(nombre);
     notifyListeners();
   }
+
+  Future<void> agregarFavorito(String miradorId, String userId) async {
+    await _miradorService.actualizarFavoritos(miradorId, userId);
+    await cargarMiradores();
+  }
+
+  Future<void> eliminarFavorito(String miradorId, String userId) async {
+    await _miradorService.eliminarFavorito(miradorId, userId);
+    await cargarMiradores();
+  }
+
+  List<MiradorModel> obtenerFavoritos(String userId) {
+    return _miradores.where((mirador) => mirador.favoritos.contains(userId)).toList();
+  }
 }

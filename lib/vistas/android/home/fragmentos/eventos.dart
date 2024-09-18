@@ -24,9 +24,9 @@ class EventosFragmento extends StatelessWidget {
           ),
         ),
         const Expanded(
-          flex: 2,
+          flex: 4,
           child: Padding(
-            padding: EdgeInsets.only(left: 15, right: 15, bottom: 15),
+            padding: EdgeInsets.only(left: 15, right: 15, bottom: 15, top: 30),
             child: CalendarioInteractivo(),
           ),
         ),

@@ -66,21 +66,13 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.only(right: 15),
                     child: Icon(
                       Icons.notifications_none_outlined,
                       color: AppColors.amarilloSupernova,
                       size: 35,
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.menu_outlined,
-                      color: AppColors.amarilloSupernova,
-                      size: 35,
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),

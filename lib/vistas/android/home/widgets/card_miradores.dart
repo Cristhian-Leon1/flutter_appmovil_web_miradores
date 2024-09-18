@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../modelos/mirador_modelo.dart';
+import '../../../../provider/fragmento_miradores_provider.dart';
+import '../../../../provider/iniciar_sesion_provider.dart';
 
 class CardMirador extends StatelessWidget {
   final MiradorModel mirador;
@@ -70,7 +73,7 @@ class CardMirador extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   const InteractiveStars(),
-                  const InteractiveFavorite(),
+                  InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
                 ],
               ),
             ],
@@ -116,7 +119,10 @@ class _InteractiveStarsState extends State<InteractiveStars> {
 }
 
 class InteractiveFavorite extends StatefulWidget {
-  const InteractiveFavorite({super.key});
+  final String miradorId;
+  final List<String> favoritos;
+
+  const InteractiveFavorite({required this.miradorId, required this.favoritos, super.key});
 
   @override
   _InteractiveFavoriteState createState() => _InteractiveFavoriteState();
@@ -126,16 +132,34 @@ class _InteractiveFavoriteState extends State<InteractiveFavorite> {
   bool _isFavorite = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = Provider.of<IniciarSesionProvider>(context, listen: false).usuario.id;
+      setState(() {
+        _isFavorite = widget.favoritos.contains(userId);
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: Icon(
         _isFavorite ? Icons.favorite : Icons.favorite_border,
         color: Colors.red,
       ),
-      onPressed: () {
+      onPressed: () async {
         setState(() {
           _isFavorite = !_isFavorite;
         });
+        final userId = Provider.of<IniciarSesionProvider>(context, listen: false).usuario.id;
+        final miradorProvider = Provider.of<MiradoresFragmentoProvider>(context, listen: false);
+        if (_isFavorite) {
+          await miradorProvider.agregarFavorito(widget.miradorId, userId);
+        } else {
+          await miradorProvider.eliminarFavorito(widget.miradorId, userId);
+        }
       },
     );
   }

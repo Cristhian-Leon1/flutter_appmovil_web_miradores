@@ -14,48 +14,50 @@ class CalendarioInteractivo extends StatelessWidget {
     final eventosProvider = Provider.of<EventosProvider>(context);
     String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
-    return Card(
-      elevation: 3,
-      color: Colors.grey[300],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Center(
-          child: TableCalendar(
-            locale: 'es_ES',
-            availableCalendarFormats: const {
-              CalendarFormat.month: 'Mes',
-            },
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
-            focusedDay: eventosProvider.focusedDay,
-            headerStyle: HeaderStyle(
-              titleTextFormatter: (date, locale) => capitalize(DateFormat.yMMMM(locale).format(date)),
-            ),
-            daysOfWeekStyle: DaysOfWeekStyle(
-              dowTextFormatter: (date, locale) => capitalize(DateFormat.E(locale).format(date)),
-            ),
-            selectedDayPredicate: (day) {
-              return isSameDay(eventosProvider.selectedDay, day);
-            },
-            eventLoader: (day) {
-              return eventosProvider.getEventsForDay(day);
-            },
-            calendarStyle: const CalendarStyle(
-              todayDecoration: BoxDecoration(
-                color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
-                shape: BoxShape.circle,
+    return SizedBox(
+      child: Card(
+        elevation: 3,
+        color: Colors.grey[300],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: TableCalendar(
+              locale: 'es_ES',
+              availableCalendarFormats: const {
+                CalendarFormat.month: 'Mes',
+              },
+              firstDay: DateTime.utc(2020, 1, 1),
+              lastDay: DateTime.utc(2030, 12, 31),
+              focusedDay: eventosProvider.focusedDay,
+              headerStyle: HeaderStyle(
+                titleTextFormatter: (date, locale) => capitalize(DateFormat.yMMMM(locale).format(date)),
               ),
-              selectedDecoration: BoxDecoration(
-                color: AppColors.amarilloSupernova,
-                shape: BoxShape.circle,
+              daysOfWeekStyle: DaysOfWeekStyle(
+                dowTextFormatter: (date, locale) => capitalize(DateFormat.E(locale).format(date)),
               ),
+              selectedDayPredicate: (day) {
+                return isSameDay(eventosProvider.selectedDay, day);
+              },
+              eventLoader: (day) {
+                return eventosProvider.getEventsForDay(day);
+              },
+              calendarStyle: const CalendarStyle(
+                todayDecoration: BoxDecoration(
+                  color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: BoxDecoration(
+                  color: AppColors.amarilloSupernova,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              onDaySelected: (selectedDay, focusedDay) {
+                eventosProvider.onDaySelected(selectedDay, focusedDay);
+              },
             ),
-            onDaySelected: (selectedDay, focusedDay) {
-              eventosProvider.onDaySelected(selectedDay, focusedDay);
-            },
           ),
         ),
       ),

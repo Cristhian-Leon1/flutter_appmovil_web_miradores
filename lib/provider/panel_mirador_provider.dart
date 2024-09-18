@@ -86,6 +86,7 @@ class PanelMiradorProvider with ChangeNotifier {
   bool nombreDescripcionEdit= false;
 
   MiradorModel mirador = MiradorModel(
+    id: '',
     userId: '',
     name: '',
     description: '',

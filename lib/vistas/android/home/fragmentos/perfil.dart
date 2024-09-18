@@ -19,9 +19,9 @@ class PerfilFragmento extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 'PERFIL',
@@ -55,7 +55,7 @@ class PerfilFragmento extends StatelessWidget {
               Text(
                 usuario.name == '' || usuario.name.isEmpty
                 ? 'Nombre del usuario'
-                : usuario.name,
+                : usuario.name.split(' ').map((word) => word[0].toUpperCase() + word.substring(1)).join(' '),
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -65,9 +65,9 @@ class PerfilFragmento extends StatelessWidget {
           ),
         ),
         Expanded(
-          flex: 4,
+          flex: 5,
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 40),
             child: perfilProvider.selectedOption == 0
             ? const SeleccionOpcionesPerfil()
             : const FormularioPerfil()

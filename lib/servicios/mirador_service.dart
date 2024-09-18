@@ -163,7 +163,7 @@ class MiradorService {
   Future<List<MiradorModel>> obtenerMiradores() async {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('Miradores').get();
-      return querySnapshot.docs.map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
+      return querySnapshot.docs.map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>, doc.id)).toList();
     } catch (e) {
       print('Error al obtener miradores: $e');
       return [];
@@ -175,12 +175,34 @@ class MiradorService {
       QuerySnapshot querySnapshot = await _firestore.collection('Miradores').get();
       String nombreLower = nombre.toLowerCase();
       return querySnapshot.docs
-          .map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>))
+          .map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>, doc.id)) // Incluir el ID del documento
           .where((mirador) => mirador.name.toLowerCase().contains(nombreLower))
           .toList();
     } catch (e) {
       print('Error al buscar miradores: $e');
       return [];
+    }
+  }
+
+  Future<void> actualizarFavoritos(String miradorId, String userId) async {
+    try {
+      DocumentReference docRef = _firestore.collection('Miradores').doc(miradorId);
+      await docRef.update({
+        'favoritos': FieldValue.arrayUnion([userId]),
+      });
+    } catch (e) {
+      print('Error al actualizar favoritos: $e');
+    }
+  }
+
+  Future<void> eliminarFavorito(String miradorId, String userId) async {
+    try {
+      DocumentReference docRef = _firestore.collection('Miradores').doc(miradorId);
+      await docRef.update({
+        'favoritos': FieldValue.arrayRemove([userId]),
+      });
+    } catch (e) {
+      print('Error al eliminar favorito: $e');
     }
   }
 }

@@ -1,6 +1,5 @@
-import 'evento_modelo.dart';
-
 class MiradorModel {
+  String id;
   String userId;
   String name;
   String description;
@@ -13,8 +12,10 @@ class MiradorModel {
   String facebook;
   List<String?> servicios;
   List<String?> hora;
+  List<String> favoritos;
 
   MiradorModel({
+    required this.id,
     required this.userId,
     required this.name,
     required this.description,
@@ -27,10 +28,12 @@ class MiradorModel {
     required this.facebook,
     required this.servicios,
     required this.hora,
+    this.favoritos = const [],
   });
 
-  factory MiradorModel.fromMap(Map<String, dynamic> data) {
+  factory MiradorModel.fromMap(Map<String, dynamic> data, String documentId) {
     return MiradorModel(
+      id: documentId,
       userId: data['userId'] ?? '',
       name: data['name'] ?? '',
       description: data['description'] ?? '',
@@ -43,6 +46,7 @@ class MiradorModel {
       facebook: data['facebook'] ?? '',
       servicios: List<String>.from(data['servicios'] ?? []),
       hora: List<String>.from(data['hora'] ?? ['', '']),
+      favoritos: List<String>.from(data['favoritos'] ?? []), // Asegúrate de inicializar la lista de favoritos
     );
   }
 
@@ -88,6 +92,10 @@ class MiradorModel {
 
   void actualizarHora(List<String> hora) {
     this.hora = hora;
+  }
+
+  void agregarFavorito(String userId) {
+    favoritos.add(userId);
   }
 
   @override

@@ -37,6 +37,7 @@ class IniciarSesionProvider with ChangeNotifier {
                         );
 
   MiradorModel mirador = MiradorModel(
+                          id: '',
                           userId: '',
                           name: '',
                           description: '',
@@ -46,7 +47,7 @@ class IniciarSesionProvider with ChangeNotifier {
                           instagram: '',
                           facebook: '',
                           servicios: [],
-                          hora: []
+                          hora: [],
   );
 
   void agregarValor(TextEditingController controller, String tipo) {
@@ -121,7 +122,7 @@ class IniciarSesionProvider with ChangeNotifier {
         if (miradorQuery.docs.isNotEmpty) {
           tieneMirador = true;
           DocumentSnapshot miradorDoc = miradorQuery.docs.first;
-          mirador = MiradorModel.fromMap(miradorDoc.data() as Map<String, dynamic>);
+          mirador = MiradorModel.fromMap(miradorDoc.data() as Map<String, dynamic>, miradorDoc.id);
           mirador.userId = userId;
         }
         notifyListeners();
