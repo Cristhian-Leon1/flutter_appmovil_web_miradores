@@ -18,4 +18,9 @@ class HomeProvider with ChangeNotifier {
     screens = index;
     notifyListeners();
   }
+
+  void resetVariables() {
+    screens = 0;
+    notifyListeners();
+  }
 }

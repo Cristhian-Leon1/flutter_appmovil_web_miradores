@@ -26,18 +26,32 @@ class PerfilFragmento extends StatelessWidget {
               Text(
                 'PERFIL',
                 style: GoogleFonts.inter(
-                  fontSize: 40,
+                  fontSize: 33,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               const SizedBox(height: 10),
               usuario.image == '' || usuario.image == null
               ? const Icon(Icons.person_2_outlined, size: 100)
-              : CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(usuario.image)
+              : Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.green, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.35),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage(usuario.image),
+                ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 20),
               Text(
                 usuario.name == '' || usuario.name.isEmpty
                 ? 'Nombre del usuario'

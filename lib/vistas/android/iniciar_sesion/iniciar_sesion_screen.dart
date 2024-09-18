@@ -20,8 +20,7 @@ class IniciarSesionPage extends StatelessWidget {
       iniciarSesionProvider.emailFocusNode.unfocus();
     }
 
-    return MaterialApp(
-      home: SafeArea(
+    return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
           body: GestureDetector(
@@ -102,8 +101,7 @@ class IniciarSesionPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 

@@ -169,4 +169,18 @@ class MiradorService {
       return [];
     }
   }
+
+  Future<List<MiradorModel>> buscarMiradoresPorNombre(String nombre) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('Miradores').get();
+      String nombreLower = nombre.toLowerCase();
+      return querySnapshot.docs
+          .map((doc) => MiradorModel.fromMap(doc.data() as Map<String, dynamic>))
+          .where((mirador) => mirador.name.toLowerCase().contains(nombreLower))
+          .toList();
+    } catch (e) {
+      print('Error al buscar miradores: $e');
+      return [];
+    }
+  }
 }

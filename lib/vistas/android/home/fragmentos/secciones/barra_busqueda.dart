@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import '../../../../../provider/fragmento_miradores_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 
 class BarraBusqueda extends StatelessWidget {
@@ -8,8 +9,11 @@ class BarraBusqueda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
       child: TextField(
+        onChanged: (value) {
+          Provider.of<MiradoresFragmentoProvider>(context, listen: false).buscarMiradores(value.toLowerCase());
+        },
         decoration: InputDecoration(
           hintText: 'Buscar mirador...',
           hintStyle: const TextStyle(color: Colors.white),

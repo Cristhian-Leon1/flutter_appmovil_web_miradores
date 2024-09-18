@@ -18,8 +18,7 @@ class CrearCuenta2Page extends StatelessWidget {
       registroProvider.nameFocusNode.unfocus();
     }
 
-    return MaterialApp(
-      home: SafeArea(
+    return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
           body: GestureDetector(
@@ -96,7 +95,6 @@ class CrearCuenta2Page extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

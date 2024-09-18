@@ -18,8 +18,7 @@ class CrearCuentaPage extends StatelessWidget {
       registroProvider.emailFocusNode.unfocus();
     }
 
-    return MaterialApp(
-      home: SafeArea(
+    return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
           body: GestureDetector(
@@ -100,7 +99,6 @@ class CrearCuentaPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

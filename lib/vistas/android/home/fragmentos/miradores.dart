@@ -30,12 +30,15 @@ class _MiradoresFragmentoState extends State<MiradoresFragmento> {
               child: BarraBusqueda(),
             ),
             Expanded(
-              flex: 7,
-              child: ListView.builder(
-                itemCount: provider.miradores.length,
-                itemBuilder: (context, index) {
-                  return CardMirador(mirador: provider.miradores[index]);
-                },
+              flex: 8,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: ListView.builder(
+                  itemCount: provider.miradores.length,
+                  itemBuilder: (context, index) {
+                    return CardMirador(mirador: provider.miradores[index]);
+                  },
+                ),
               ),
             ),
           ],

@@ -12,4 +12,9 @@ class MiradoresFragmentoProvider with ChangeNotifier {
     _miradores = await _miradorService.obtenerMiradores();
     notifyListeners();
   }
+
+  Future<void> buscarMiradores(String nombre) async {
+    _miradores = await _miradorService.buscarMiradoresPorNombre(nombre);
+    notifyListeners();
+  }
 }

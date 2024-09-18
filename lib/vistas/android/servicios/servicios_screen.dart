@@ -14,8 +14,7 @@ class ServicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final serviciosProvider = Provider.of<ServiciosProvider>(context);
 
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: Card(
@@ -102,7 +101,6 @@ class ServicesPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

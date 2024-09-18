@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/modelos/mirador_modelo.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +9,7 @@ import '../modelos/usuario_model.dart';
 import '../servicios/autenticacion_service.dart';
 import '../vistas/android/bienvenida/bienvenida_screen.dart';
 import '../vistas/android/iniciar_sesion/iniciar_sesion_screen.dart';
+import 'fragmento_home_provider.dart';
 
 class IniciarSesionProvider with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -96,6 +98,8 @@ class IniciarSesionProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', false);
     await prefs.remove('userId');
+    final homeProvider = Provider.of<HomeProvider>(context, listen: false);
+    homeProvider.resetVariables();
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const IniciarSesionPage()),

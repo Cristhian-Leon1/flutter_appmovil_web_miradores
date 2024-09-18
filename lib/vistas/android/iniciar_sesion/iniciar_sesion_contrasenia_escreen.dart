@@ -17,8 +17,7 @@ class IniciarContraseniaPage extends StatelessWidget {
       inicioSesionProvider.passwordFocusNode.unfocus();
     }
 
-    return MaterialApp(
-      home: SafeArea(
+    return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
           body: GestureDetector(
@@ -61,7 +60,10 @@ class IniciarContraseniaPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         inicioSesionProvider.isLoading
-                        ? const Center(child: CircularProgressIndicator(color: AppColors.verdeDivertido))
+                        ? const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Center(child: CircularProgressIndicator(color: AppColors.verdeDivertido)),
+                        )
                         : BotonComun(
                             color: AppColors.verdeDivertido,
                             text: 'INICIAR SESIÓN',
@@ -91,7 +93,6 @@ class IniciarContraseniaPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
