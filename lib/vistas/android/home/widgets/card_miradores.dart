@@ -82,7 +82,7 @@ class CardMirador extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const InteractiveStars(),
+                    InteractiveStars(miradorId: mirador.id),
                     InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
                   ],
                 ),
@@ -96,7 +96,9 @@ class CardMirador extends StatelessWidget {
 }
 
 class InteractiveStars extends StatefulWidget {
-  const InteractiveStars({super.key});
+  final String miradorId;
+
+  const InteractiveStars({required this.miradorId, super.key});
 
   @override
   _InteractiveStarsState createState() => _InteractiveStarsState();
@@ -104,6 +106,19 @@ class InteractiveStars extends StatefulWidget {
 
 class _InteractiveStarsState extends State<InteractiveStars> {
   int _rating = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = Provider.of<IniciarSesionProvider>(context, listen: false).usuario.id;
+      final miradorProvider = Provider.of<MiradoresFragmentoProvider>(context, listen: false);
+      final mirador = miradorProvider.miradores.firstWhere((m) => m.id == widget.miradorId);
+      setState(() {
+        _rating = mirador.calificaciones[userId] ?? 0;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +133,13 @@ class _InteractiveStarsState extends State<InteractiveStars> {
             color: Colors.amber,
             size: 20,
           ),
-          onPressed: () {
+          onPressed: () async {
             setState(() {
               _rating = index + 1;
             });
+            final userId = Provider.of<IniciarSesionProvider>(context, listen: false).usuario.id;
+            final miradorProvider = Provider.of<MiradoresFragmentoProvider>(context, listen: false);
+            await miradorProvider.agregarCalificacion(widget.miradorId, userId, _rating);
           },
         );
       }),
@@ -175,3 +193,4 @@ class _InteractiveFavoriteState extends State<InteractiveFavorite> {
     );
   }
 }
+

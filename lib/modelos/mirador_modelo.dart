@@ -13,6 +13,7 @@ class MiradorModel {
   List<String?> servicios;
   List<String?> hora;
   List<String> favoritos;
+  Map<String, int> calificaciones;
 
   MiradorModel({
     required this.id,
@@ -29,6 +30,7 @@ class MiradorModel {
     required this.servicios,
     required this.hora,
     this.favoritos = const [],
+    this.calificaciones = const {},
   });
 
   factory MiradorModel.fromMap(Map<String, dynamic> data, String documentId) {
@@ -46,8 +48,18 @@ class MiradorModel {
       facebook: data['facebook'] ?? '',
       servicios: List<String>.from(data['servicios'] ?? []),
       hora: List<String>.from(data['hora'] ?? ['', '']),
-      favoritos: List<String>.from(data['favoritos'] ?? []), // Asegúrate de inicializar la lista de favoritos
+      favoritos: List<String>.from(data['favoritos'] ?? []),
+      calificaciones: Map<String, int>.from(data['calificaciones'] ?? {}),
     );
+  }
+
+  void agregarCalificacion(String userId, int calificacion) {
+    calificaciones[userId] = calificacion;
+  }
+
+  double obtenerCalificacionPromedio() {
+    if (calificaciones.isEmpty) return 0.0;
+    return calificaciones.values.reduce((a, b) => a + b) / calificaciones.length;
   }
 
   void actualizarNombre(String name) {

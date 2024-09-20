@@ -205,4 +205,15 @@ class MiradorService {
       print('Error al eliminar favorito: $e');
     }
   }
+
+  Future<void> agregarCalificacion(String miradorId, String userId, int calificacion) async {
+    try {
+      DocumentReference docRef = _firestore.collection('Miradores').doc(miradorId);
+      await docRef.update({
+        'calificaciones.$userId': calificacion,
+      });
+    } catch (e) {
+      print('Error al agregar calificación: $e');
+    }
+  }
 }
