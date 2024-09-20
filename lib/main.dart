@@ -145,6 +145,7 @@ class MaterialAppWithTheme extends StatelessWidget {
               '/cargar_imagen': (context) => const UploadImagePage(),
               '/bienvenida': (context) => const BienvenidaPage(),
               '/home': (context) => const HomePage(),
+
               '/web_sesion_registro': (context) => const WebSesionRegistroScreen(),
               '/panel_administrativo': (context) => const PanelScreen(),
             },

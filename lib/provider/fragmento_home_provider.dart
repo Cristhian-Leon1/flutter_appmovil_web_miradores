@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
+import '../servicios/mirador_service.dart';
 class HomeProvider with ChangeNotifier {
   int screens = 0;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+  final MiradorService _miradorService = MiradorService();
 
   GlobalKey<CurvedNavigationBarState> get bottomNavigationKey => _bottomNavigationKey;
 
@@ -22,5 +24,9 @@ class HomeProvider with ChangeNotifier {
   void resetVariables() {
     screens = 0;
     notifyListeners();
+  }
+
+  Future<List<String>> obtenerOfertasLaborales() async {
+    return await _miradorService.obtenerOfertasLaborales();
   }
 }

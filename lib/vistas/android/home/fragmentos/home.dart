@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../../provider/fragmento_home_provider.dart';
 import '../../../../utils/custom/custom_colors.dart';
 import '../../../widgets/boton_personalizable.dart';
+import 'oferta_laboral.dart';
 
 class HomeFragmento extends StatefulWidget {
   const HomeFragmento({super.key});
@@ -103,7 +104,10 @@ class _HomeFragmentoState extends State<HomeFragmento> {
                         color: AppColors.verdeDivertido,
                         text: 'Oferta laboral',
                         onPressed: () {
-                          homeProvider.cambiarFragmento(2);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const OfertaLaboralFragmento()),
+                          );
                         },
                       ),
                     ],
@@ -148,14 +152,27 @@ class _HomeFragmentoState extends State<HomeFragmento> {
                         padding: const EdgeInsets.all(8.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.asset('assets/oferta.jpg', fit: BoxFit.cover),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const OfertaLaboralFragmento()),
+                              );
+                            },
+                            child: Image.asset('assets/oferta.jpg', fit: BoxFit.cover)
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Image.asset('assets/miradores.jpg', fit: BoxFit.cover),
+                          child: GestureDetector(
+                            onTap: () {
+                              homeProvider.setPage(2);
+                            },
+                            child: Image.asset('assets/miradores.jpg', fit: BoxFit.cover)
+                          ),
                         ),
                       ),
                     ],

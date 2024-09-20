@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../../modelos/mirador_modelo.dart';
 import '../../../../provider/fragmento_miradores_provider.dart';
 import '../../../../provider/iniciar_sesion_provider.dart';
+import '../fragmentos/secciones/mirador_informacion.dart';
 
 class CardMirador extends StatelessWidget {
   final MiradorModel mirador;
@@ -11,72 +12,82 @@ class CardMirador extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 7),
-      child: Card(
-        color: Colors.grey[300],
-        elevation: 3,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Container(
-          width: double.infinity,
-          height: 180,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: NetworkImage(mirador.image),
-                        fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InformacionMirador(mirador: mirador),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 7),
+        child: Card(
+          color: Colors.grey[300],
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Container(
+            width: double.infinity,
+            height: 180,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: NetworkImage(mirador.image),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          mirador.name,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            mirador.name,
+                            maxLines: 2,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          mirador.description,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black54,
+                          const SizedBox(height: 8),
+                          Text(
+                            mirador.description,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black54,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  const InteractiveStars(),
-                  InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const InteractiveStars(),
+                    InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
