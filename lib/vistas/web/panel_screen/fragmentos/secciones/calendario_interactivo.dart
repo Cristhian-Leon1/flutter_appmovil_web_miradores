@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../../../../modelos/evento_modelo.dart';
+import '../../../../../provider/iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_eventos_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 
@@ -12,7 +14,12 @@ class CalendarioInteractivo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventosProvider = Provider.of<EventosProvider>(context);
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+
+    String capitalize(String input) {
+      if (input.isEmpty) return input;
+      return input[0].toUpperCase() + input.substring(1);
+    }
 
     return SizedBox(
       child: Card(
@@ -57,6 +64,23 @@ class CalendarioInteractivo extends StatelessWidget {
               onDaySelected: (selectedDay, focusedDay) {
                 eventosProvider.onDaySelected(selectedDay, focusedDay);
               },
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, day, events) {
+                  List<EventoModel> eventos = eventosProvider.getEventsForDay(day);
+                  if (eventos.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  bool isUserEvent = eventos.any((evento) => evento.userId == sesionProvider.usuario.id);
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: isUserEvent ? Colors.green : Colors.yellow,
+                      shape: BoxShape.circle,
+                    ),
+                    width: 16,
+                    height: 16,
+                  );
+                },
+              ),
             ),
           ),
         ),

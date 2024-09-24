@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-
+import 'package:provider/provider.dart';
 import '../servicios/mirador_service.dart';
+import 'iniciar_sesion_provider.dart';
+
 class HomeProvider with ChangeNotifier {
   int screens = 0;
   final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
@@ -26,7 +28,8 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<String>> obtenerOfertasLaborales() async {
-    return await _miradorService.obtenerOfertasLaborales();
+  Future<List<String>> obtenerOfertasLaborales(BuildContext context) async {
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
+    return await _miradorService.obtenerOfertasLaborales(sesionProvider.usuario.id);
   }
 }

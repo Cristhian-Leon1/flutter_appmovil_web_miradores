@@ -25,6 +25,9 @@ class AutenticacionService {
           phone: '',
         );
       }
+    } on FirebaseAuthException catch (e) {
+      // Re-throw the FirebaseAuthException to be caught in the provider
+      throw e;
     } catch (e) {
       print('Error during login: $e');
     }

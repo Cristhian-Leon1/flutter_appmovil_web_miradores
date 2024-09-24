@@ -5,6 +5,7 @@ import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/servicios/storage_service.dart';
 import '../modelos/evento_modelo.dart';
 import '../modelos/mirador_modelo.dart';
+import '../modelos/oferta_laboral_modelo.dart';
 import '../provider/panel_mirador_provider.dart';
 
 class MiradorService {
@@ -123,24 +124,22 @@ class MiradorService {
         'hora': evento.hora,
         'descripcion': evento.descripcion,
         'image': imageUrl,
+        'fecha': evento.fecha?.toIso8601String(), // Asegurarse de guardar la fecha
       });
     } catch (e) {
       print('Error al actualizar evento: $e');
     }
   }
 
-  Future<void> guardarOfertaLaboral(String userId, String imageUrl) async {
+  Future<void> guardarOfertaLaboral(OfertaLaboralModel ofertaLaboral) async {
     try {
       QuerySnapshot query = await _firestore.collection('OfertasLaborales')
-          .where('userId', isEqualTo: userId)
+          .where('userId', isEqualTo: ofertaLaboral.userId)
           .limit(1)
           .get();
 
       if (query.docs.isEmpty) {
-        await _firestore.collection('OfertasLaborales').add({
-          'userId': userId,
-          'imageUrl': imageUrl,
-        });
+        await _firestore.collection('OfertasLaborales').add(ofertaLaboral.toMap());
       } else {
         print('Ya existe una oferta laboral para este usuario');
       }
@@ -149,14 +148,30 @@ class MiradorService {
     }
   }
 
-  Future<List<String>> obtenerOfertasLaborales() async {
+  Future<List<String>> obtenerOfertasLaborales(String userId) async {
     try {
-      QuerySnapshot querySnapshot = await _firestore.collection('OfertasLaborales').get();
+      QuerySnapshot querySnapshot = await _firestore.collection('OfertasLaborales')
+          .where('userId', isEqualTo: userId)
+          .get();
       List<String> imageUrls = querySnapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
       return imageUrls;
     } catch (e) {
       print('Error al obtener ofertas laborales: $e');
       return [];
+    }
+  }
+
+  Future<void> eliminarOfertaLaboral(String userId) async {
+    try {
+      QuerySnapshot query = await _firestore.collection('OfertasLaborales')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      for (var doc in query.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      print('Error al eliminar oferta laboral: $e');
     }
   }
 
@@ -214,6 +229,16 @@ class MiradorService {
       });
     } catch (e) {
       print('Error al agregar calificación: $e');
+    }
+  }
+
+  Future<List<EventoModel>> obtenerEventos() async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('Eventos').get();
+      return querySnapshot.docs.map((doc) => EventoModel.fromMap(doc.data() as Map<String, dynamic>)).toList();
+    } catch (e) {
+      print('Error al obtener eventos: $e');
+      return [];
     }
   }
 }

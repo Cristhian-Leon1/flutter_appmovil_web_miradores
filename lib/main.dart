@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
           create: (_) => PanelMiradorProvider(),
         ),
         ChangeNotifierProvider<OfertaLaboralProvider>(
-          create: (_) => OfertaLaboralProvider(),
+          create: (_) => OfertaLaboralProvider(context),
         ),
         ChangeNotifierProvider<PerfilProvider>(
           create: (_) => PerfilProvider(),
@@ -127,7 +127,7 @@ class MaterialAppWithTheme extends StatelessWidget {
           if (kIsWeb) {
             initialRoute = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
           } else {
-            initialRoute = isLoggedIn ? '/home' : '/splash';
+            initialRoute = isLoggedIn ? '/bienvenida' : '/splash';
           }
 
           return MaterialApp(

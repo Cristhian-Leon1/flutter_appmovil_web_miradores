@@ -1,9 +1,7 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
-
 import '../../../../../provider/panel_oferta_laboral_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 
@@ -24,57 +22,85 @@ class FormularioOfertaLaboral extends StatelessWidget {
             flex: 10,
             child: Center(
               child: image == null
-              ? const Icon(
+                  ? const Icon(
                 Icons.post_add_outlined,
                 color: AppColors.azulClaro,
-                size: 200
+                size: 200,
               )
-              : Container(
+                  : Container(
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border.all(
                     color: AppColors.azulClaro,
-                    width: 4.0,
+                    width: 2,
                   ),
                 ),
                 child: ClipRect(
-                  child: Image.memory(image as Uint8List, fit: BoxFit.cover)
+                  child: Image.memory(image as Uint8List, fit: BoxFit.cover),
                 ),
               ),
-            )
+            ),
           ),
           Expanded(
             flex: 4,
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: BotonComun(
-                      color: AppColors.azulClaro,
-                      text: 'Cargar imagen',
-                      onPressed: (){
-                        ofertaProvider.pickImageFromGallery();
-                      }
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: ofertaProvider.isLoading
-                    ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                    : BotonComun(
+                  if (ofertaProvider.imageUrls.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: ofertaProvider.isDeleting
+                          ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                          : BotonComun(
                         color: AppColors.azulClaro,
-                        text: 'Actualizar oferta',
-                        onPressed: (){
-                          ofertaProvider.subirOfertaLaboral(context);
-                        }
-                    ),
-                  )
+                        text: 'Eliminar oferta',
+                        onPressed: () {
+                          ofertaProvider.eliminarOfertaLaboral(context);
+                        },
+                      ),
+                    )
+                  else if (image == null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: BotonComun(
+                        color: AppColors.azulClaro,
+                        text: 'Cargar imagen',
+                        onPressed: () {
+                          ofertaProvider.pickImageFromGallery();
+                        },
+                      ),
+                    )
+                  else if (image != null && !ofertaProvider.isUpload)
+                      ofertaProvider.isLoading
+                          ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                          : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: BotonComun(
+                          color: AppColors.azulClaro,
+                          text: 'Subir oferta',
+                          onPressed: () {
+                            ofertaProvider.subirOfertaLaboral(context);
+                          },
+                        ),
+                      )
+                    else if (ofertaProvider.isUpload)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
+                          child: ofertaProvider.isDeleting
+                              ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                              : BotonComun(
+                            color: AppColors.azulClaro,
+                            text: 'Eliminar oferta',
+                            onPressed: () {
+                              ofertaProvider.eliminarOfertaLaboral(context);
+                            },
+                          ),
+                        ),
                 ],
               ),
-            )
+            ),
           ),
         ],
       ),

@@ -1,9 +1,11 @@
 class EventoModel {
   String nombre;
-  double precio;
+  String precio;
   String hora;
   String descripcion;
   dynamic image;
+  DateTime? fecha;
+  String? userId;
 
   EventoModel({
     required this.nombre,
@@ -11,15 +13,19 @@ class EventoModel {
     required this.hora,
     required this.descripcion,
     this.image,
+    this.fecha,
+    this.userId,
   });
 
   factory EventoModel.fromMap(Map<String, dynamic> data) {
     return EventoModel(
       nombre: data['nombre'] ?? '',
-      precio: data['precio']?.toDouble() ?? 0.0,
+      precio: data['precio'] ?? '',
       hora: data['hora'] ?? '',
       descripcion: data['descripcion'] ?? '',
       image: data['image'],
+      fecha: data['fecha'] != null ? DateTime.parse(data['fecha']) : null,
+      userId: data['userId'], // Parsear el userId
     );
   }
 
@@ -30,6 +36,8 @@ class EventoModel {
       'hora': hora,
       'descripcion': descripcion,
       'image': image,
+      'fecha': fecha?.toIso8601String(),
+      'userId': userId, // Convertir el userId a String
     };
   }
 
@@ -37,7 +45,7 @@ class EventoModel {
     this.nombre = nombre;
   }
 
-  void actualizarPrecio(double precio) {
+  void actualizarPrecio(String precio) {
     this.precio = precio;
   }
 
@@ -51,5 +59,13 @@ class EventoModel {
 
   void actualizarImagen(dynamic imagen) {
     this.image = imagen;
+  }
+
+  void actualizarFecha(DateTime fecha) {
+    this.fecha = fecha;
+  }
+
+  void actualizarUserId(String userId) { // Nuevo método para actualizar el userId
+    this.userId = userId;
   }
 }

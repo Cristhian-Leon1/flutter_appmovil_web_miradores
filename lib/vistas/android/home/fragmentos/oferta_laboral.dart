@@ -49,7 +49,7 @@ class OfertaLaboralSlider extends StatelessWidget {
     final homeProvider = Provider.of<HomeProvider>(context, listen: false);
 
     return FutureBuilder<List<String>>(
-      future: homeProvider.obtenerOfertasLaborales(),
+      future: homeProvider.obtenerOfertasLaborales(context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

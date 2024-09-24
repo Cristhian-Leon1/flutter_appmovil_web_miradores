@@ -30,9 +30,10 @@ class EventosProvider with ChangeNotifier {
 
   EventoModel evento = EventoModel(
     nombre: '',
-    precio: 0,
+    precio: '',
     hora: '',
     descripcion: '',
+    fecha: null,
   );
 
   Map<DateTime, List<EventoModel>> eventos = {};
@@ -45,21 +46,52 @@ class EventosProvider with ChangeNotifier {
           evento.actualizarNombre(valor);
           break;
         case 'precio':
-          evento.actualizarPrecio(valor as double);
+          evento.actualizarPrecio(valor);
           break;
         case 'hora':
           evento.actualizarHora(valor);
           break;
         case 'descripcion':
           evento.actualizarDescripcion(valor);
+          break;
       }
       controller.clear();
     }
   }
 
+  Future<void> cargarEventos(BuildContext context) async {
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
+    final miradorService = MiradorService();
+
+    List<EventoModel> eventos = await miradorService.obtenerEventos();
+    for (var evento in eventos) {
+      DateTime? fecha = evento.fecha;
+      if (fecha != null) {
+        if (this.eventos[fecha] == null) {
+          this.eventos[fecha] = [];
+        }
+        this.eventos[fecha]!.add(evento);
+      }
+    }
+
+    // Pintar los días en el calendario
+    for (var entry in this.eventos.entries) {
+      for (var evento in entry.value) {
+        if (evento.userId == sesionProvider.usuario.id) {
+          // Pintar de verde
+        } else {
+          // Pintar de amarillo
+        }
+      }
+    }
+
+    notifyListeners();
+  }
+
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     _selectedDay = selectedDay;
     _focusedDay = focusedDay;
+    evento.actualizarFecha(selectedDay);
     notifyListeners();
   }
 
@@ -89,9 +121,11 @@ class EventosProvider with ChangeNotifier {
       final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
 
       evento.actualizarNombre(nombreController.text);
-      evento.actualizarPrecio(double.parse(precioController.text));
+      evento.actualizarPrecio(precioController.text);
       evento.actualizarHora(horaController.text);
       evento.actualizarDescripcion(descripcionController.text);
+      evento.actualizarUserId(sesionProvider.usuario.id);
+      evento.actualizarFecha(_selectedDay!);
 
       await _miradorService.actualizarEvento(sesionProvider.mirador.userId, evento);
       agregarEvento(evento);

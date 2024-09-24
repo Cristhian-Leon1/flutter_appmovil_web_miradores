@@ -81,6 +81,7 @@ class CrearCuentaFragmento extends StatelessWidget {
                     onTap: () {
                       registroProvider.siguienteWebFalse();
                       sesionProvider.toggleAuthProcess();
+                      registroProvider.limpiarImagen();
                     },
                     child: RichText(
                       text: const TextSpan(

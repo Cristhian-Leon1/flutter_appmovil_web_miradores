@@ -143,7 +143,7 @@ class RegistroProvider with ChangeNotifier {
           content: Text(message, style: const TextStyle(fontSize: 16)),
           actions:  <Widget>[
             TextButton(
-              child: const Text('OK', style: TextStyle(color: AppColors.verdeDivertido)),
+              child: const Text('OK', style: TextStyle(color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -152,6 +152,11 @@ class RegistroProvider with ChangeNotifier {
         );
       },
     );
+  }
+
+  void limpiarImagen() {
+    usuario.image = null;
+    notifyListeners();
   }
 
   void disposeControllers() {

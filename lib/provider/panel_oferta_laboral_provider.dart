@@ -4,12 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import '../modelos/oferta_laboral_modelo.dart';
 import '../servicios/mirador_service.dart';
 import 'iniciar_sesion_provider.dart';
 
 class OfertaLaboralProvider with ChangeNotifier {
   dynamic image;
   bool isLoading = false;
+  bool isDeleting = false;
+  bool isUpload = false;
   List<String> _imageUrls = [];
   bool _isSliderLoading = true;
   final PageController _pageController = PageController();
@@ -19,8 +22,8 @@ class OfertaLaboralProvider with ChangeNotifier {
   bool get isSliderLoading => _isSliderLoading;
   PageController get pageController => _pageController;
 
-  OfertaLaboralProvider() {
-    _fetchOfertasLaborales();
+  OfertaLaboralProvider(BuildContext context) {
+    _fetchOfertasLaborales(context);
     _startAutoSlide();
   }
 
@@ -85,9 +88,14 @@ class OfertaLaboralProvider with ChangeNotifier {
       String? imageUrl = await miradorService.uploadImage(userId, image, 'ofertas_laborales_images');
 
       if (imageUrl != null) {
-        await miradorService.guardarOfertaLaboral(userId, imageUrl);
+        OfertaLaboralModel ofertaLaboral = OfertaLaboralModel(userId: userId, imageUrl: imageUrl);
+        await miradorService.guardarOfertaLaboral(ofertaLaboral);
+        isUpload = true;
         image = null;
         print('Oferta laboral subida exitosamente');
+
+        // Refresh the image URLs
+        _imageUrls = await miradorService.obtenerOfertasLaborales(userId);
       } else {
         print('Error al subir la imagen');
       }
@@ -99,12 +107,34 @@ class OfertaLaboralProvider with ChangeNotifier {
     }
   }
 
-  Future<void> _fetchOfertasLaborales() async {
+  Future<void> eliminarOfertaLaboral(BuildContext context) async {
+    image = null;
+    isDeleting = true;
+    notifyListeners();
+
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
+    final miradorService = MiradorService();
+
+    try {
+      String userId = sesionProvider.usuario.id;
+      await miradorService.eliminarOfertaLaboral(userId);
+      _imageUrls = await miradorService.obtenerOfertasLaborales(userId);
+    } catch (e) {
+      print('Error al eliminar oferta laboral: $e');
+    } finally {
+      isDeleting = false;
+      notifyListeners();
+    }
+  }
+
+
+  Future<void> _fetchOfertasLaborales(BuildContext context) async {
     _isSliderLoading = true;
     notifyListeners();
 
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
     final miradorService = MiradorService();
-    _imageUrls = await miradorService.obtenerOfertasLaborales();
+    _imageUrls = await miradorService.obtenerOfertasLaborales(sesionProvider.usuario.id);
     _isSliderLoading = false;
     notifyListeners();
   }

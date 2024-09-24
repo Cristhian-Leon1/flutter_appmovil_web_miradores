@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -69,28 +70,71 @@ class IniciarSesionProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    UsuarioModel? user = await _autenticacionService.login(
-      usuario.email,
-      usuario.password,
-    );
+    try {
+      UsuarioModel? user = await _autenticacionService.login(
+        usuario.email,
+        usuario.password,
+      );
 
-    if (user != null) {
-      usuario = user;
-      await fetchUserDataFromFirestore(user.id);
+      if (user != null) {
+        usuario = user;
+        await fetchUserDataFromFirestore(user.id);
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-      await prefs.setString('userId', user.id);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userId', user.id);
 
+        isLoading = false;
+        notifyListeners();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const BienvenidaPage()),
+              (Route<dynamic> route) => false,
+        );
+      } else {
+        isLoading = false;
+        notifyListeners();
+        showErrorDialog(context, 'Error desconocido. Inténtalo de nuevo.', 'error');
+      }
+    } on FirebaseAuthException catch (e) {
       isLoading = false;
       notifyListeners();
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const BienvenidaPage()),
-            (Route<dynamic> route) => false,
-      );
-    } else {
-      print('Login failed');
+      if (e.code == 'user-not-found') {
+        showErrorDialog(context, 'El correo electrónico no está registrado.', 'email');
+      } else if (e.code == 'wrong-password') {
+        showErrorDialog(context, 'La contraseña es incorrecta.', 'password');
+      } else if (e.code == 'invalid-credential') {
+        showErrorDialog(context, 'Las credenciales proporcionadas son incorrectas, el correo o contraseña no coinciden con la base de datos.', 'credential');
+      } else {
+        showErrorDialog(context, 'Error desconocido. Inténtalo de nuevo.', 'error');
+      }
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      showErrorDialog(context, 'Error desconocido. Inténtalo de nuevo.', 'error');
     }
+  }
+
+  void showErrorDialog(BuildContext context, String message, String type) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: type == 'email' ? const Text('Correo no registrado') :
+          type == 'password' ? const Text('Contraseña incorrecta') :
+          type == 'credential' ? const Text('Credenciales inválidas') :
+          type == 'error' ? const Text('Error') : null,
+          content: Text(message, style: const TextStyle(fontSize: 16)),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK', style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> logout(BuildContext context) async {
