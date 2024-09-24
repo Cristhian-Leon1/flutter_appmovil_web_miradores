@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../../provider/panel_oferta_laboral_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
+
 class SliderOfertaLaboral extends StatelessWidget {
   const SliderOfertaLaboral({super.key});
 
@@ -24,17 +25,21 @@ class SliderOfertaLaboral extends StatelessWidget {
                 border: Border.all(color: Colors.blue, width: 4.0),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: provider.imageUrls.isEmpty
-                  ? const Center(
+              child: provider.isSliderLoading
+              ? const Center(
+                child: CircularProgressIndicator(color: AppColors.azulClaro),
+              )
+              : provider.imageUrls.isEmpty
+              ? const Center(
                 child: Text(
-                  'No tienes ofertas laborales cargadas por el usuario.',
+                  'No hay imágenes disponibles',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.black54,
                   ),
                 ),
               )
-                  : PageView.builder(
+              : PageView.builder(
                 controller: provider.pageController,
                 itemCount: provider.imageUrls.length,
                 itemBuilder: (context, index) {
@@ -46,21 +51,6 @@ class SliderOfertaLaboral extends StatelessWidget {
                       imageUrl,
                       fit: BoxFit.cover,
                       width: double.infinity,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(20),
-                            child: Text(
-                              'No hay ofertas laborales cargadas por el usuario.',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
                     ),
                   );
                 },
@@ -70,10 +60,6 @@ class SliderOfertaLaboral extends StatelessWidget {
               ),
             ),
           ),
-          if (provider.isSliderLoading)
-            const Center(
-              child: CircularProgressIndicator(color: AppColors.azulClaro),
-            ),
         ],
       ),
     );

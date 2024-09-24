@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../modelos/oferta_laboral_modelo.dart';
 import '../servicios/mirador_service.dart';
+import '../servicios/oferta_laboral_service.dart';
 import 'iniciar_sesion_provider.dart';
 
 class OfertaLaboralProvider with ChangeNotifier {
@@ -17,6 +18,10 @@ class OfertaLaboralProvider with ChangeNotifier {
   bool _isSliderLoading = true;
   final PageController _pageController = PageController();
   int _currentPage = 0;
+
+  OfertaLaboralService _ofertaLaboralService = OfertaLaboralService();
+  MiradorService _miradorService = MiradorService();
+
 
   List<String> get imageUrls => _imageUrls;
   bool get isSliderLoading => _isSliderLoading;
@@ -81,21 +86,21 @@ class OfertaLaboralProvider with ChangeNotifier {
     notifyListeners();
 
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
-    final miradorService = MiradorService();
+
 
     try {
       String userId = sesionProvider.usuario.id;
-      String? imageUrl = await miradorService.uploadImage(userId, image, 'ofertas_laborales_images');
+      String? imageUrl = await _miradorService.uploadImage(userId, image, 'ofertas_laborales_images');
 
       if (imageUrl != null) {
         OfertaLaboralModel ofertaLaboral = OfertaLaboralModel(userId: userId, imageUrl: imageUrl);
-        await miradorService.guardarOfertaLaboral(ofertaLaboral);
+        await _ofertaLaboralService.guardarOfertaLaboral(ofertaLaboral);
         isUpload = true;
         image = null;
         print('Oferta laboral subida exitosamente');
 
         // Refresh the image URLs
-        _imageUrls = await miradorService.obtenerOfertasLaborales(userId);
+        _imageUrls = await _ofertaLaboralService.obtenerOfertasLaborales(userId);
       } else {
         print('Error al subir la imagen');
       }
@@ -113,12 +118,11 @@ class OfertaLaboralProvider with ChangeNotifier {
     notifyListeners();
 
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
-    final miradorService = MiradorService();
 
     try {
       String userId = sesionProvider.usuario.id;
-      await miradorService.eliminarOfertaLaboral(userId);
-      _imageUrls = await miradorService.obtenerOfertasLaborales(userId);
+      await _ofertaLaboralService.eliminarOfertaLaboral(userId);
+      _imageUrls = await _ofertaLaboralService.obtenerOfertasLaborales(userId);
     } catch (e) {
       print('Error al eliminar oferta laboral: $e');
     } finally {
@@ -133,8 +137,7 @@ class OfertaLaboralProvider with ChangeNotifier {
     notifyListeners();
 
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
-    final miradorService = MiradorService();
-    _imageUrls = await miradorService.obtenerOfertasLaborales(sesionProvider.usuario.id);
+    _imageUrls = await _ofertaLaboralService.obtenerOfertasLaborales(sesionProvider.usuario.id);
     _isSliderLoading = false;
     notifyListeners();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/modelos/evento_modelo.dart';
+import 'package:pueblito_viajero/servicios/evento_service.dart';
 
 import '../servicios/mirador_service.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
@@ -18,7 +19,7 @@ class EventosProvider with ChangeNotifier {
   final FocusNode descripcionFocusNode = FocusNode();
 
   final ImagePickerService _imagePickerService = ImagePickerService();
-  final MiradorService _miradorService = MiradorService();
+  final EventoService _eventoService = EventoService();
 
   bool isLoading = false;
 
@@ -61,9 +62,7 @@ class EventosProvider with ChangeNotifier {
 
   Future<void> cargarEventos(BuildContext context) async {
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
-    final miradorService = MiradorService();
-
-    List<EventoModel> eventos = await miradorService.obtenerEventos();
+    List<EventoModel> eventos = await _eventoService.obtenerEventos();
     for (var evento in eventos) {
       DateTime? fecha = evento.fecha;
       if (fecha != null) {
@@ -74,7 +73,6 @@ class EventosProvider with ChangeNotifier {
       }
     }
 
-    // Pintar los días en el calendario
     for (var entry in this.eventos.entries) {
       for (var evento in entry.value) {
         if (evento.userId == sesionProvider.usuario.id) {
@@ -127,7 +125,7 @@ class EventosProvider with ChangeNotifier {
       evento.actualizarUserId(sesionProvider.usuario.id);
       evento.actualizarFecha(_selectedDay!);
 
-      await _miradorService.actualizarEvento(sesionProvider.mirador.userId, evento);
+      await _eventoService.actualizarEvento(sesionProvider.mirador.userId, evento);
       agregarEvento(evento);
       evento.image = null;
       limpiarCampos();

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
-import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/text_contacto.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
@@ -175,7 +174,7 @@ class FormularioPerfil extends StatelessWidget {
                               const SizedBox(height: 16),
                               buildSectionTitle('1. Introducción'),
                               buildSectionText(
-                                'Bienvenido a [Nombre de la Aplicación]. Nos comprometemos a proteger la privacidad y seguridad de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos, y protegemos tu información personal cuando utilizas nuestra aplicación que proporciona información sobre miradores cercanos y los servicios asociados.',
+                                'Bienvenido a Pueblito Viajero. Nos comprometemos a proteger la privacidad y seguridad de nuestros usuarios. Esta Política de Privacidad describe cómo recopilamos, usamos, y protegemos tu información personal cuando utilizas nuestra aplicación que proporciona información sobre miradores cercanos y los servicios asociados.',
                               ),
                               buildSectionTitle('2. Información que Recopilamos'),
                               buildSectionSubtitle('2.1. Información que tú nos proporcionas'),
@@ -244,7 +243,7 @@ class FormularioPerfil extends StatelessWidget {
                             const SizedBox(height: 16),
                             buildSectionTitle('1. Introducción'),
                             buildSectionText(
-                              'En [Nombre de la Aplicación], nos esforzamos por crear una comunidad respetuosa y segura para todos nuestros usuarios. Estas Normas Comunitarias establecen las reglas básicas que deben seguirse al utilizar nuestra plataforma.',
+                              'En Pueblito Viajero, nos esforzamos por crear una comunidad respetuosa y segura para todos nuestros usuarios. Estas Normas Comunitarias establecen las reglas básicas que deben seguirse al utilizar nuestra plataforma.',
                             ),
                             buildSectionTitle('2. Comportamiento Respetuoso'),
                             buildSectionText(

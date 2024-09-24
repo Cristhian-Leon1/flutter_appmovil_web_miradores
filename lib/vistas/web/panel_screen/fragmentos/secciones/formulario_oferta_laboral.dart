@@ -22,12 +22,12 @@ class FormularioOfertaLaboral extends StatelessWidget {
             flex: 10,
             child: Center(
               child: image == null
-                  ? const Icon(
+              ? const Icon(
                 Icons.post_add_outlined,
                 color: AppColors.azulClaro,
                 size: 200,
               )
-                  : Container(
+              : Container(
                 width: 200,
                 height: 200,
                 decoration: BoxDecoration(
@@ -52,8 +52,8 @@ class FormularioOfertaLaboral extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: ofertaProvider.isDeleting
-                          ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                          : BotonComun(
+                      ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                      : BotonComun(
                         color: AppColors.azulClaro,
                         text: 'Eliminar oferta',
                         onPressed: () {
@@ -73,31 +73,31 @@ class FormularioOfertaLaboral extends StatelessWidget {
                       ),
                     )
                   else if (image != null && !ofertaProvider.isUpload)
-                      ofertaProvider.isLoading
-                          ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                          : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: BotonComun(
-                          color: AppColors.azulClaro,
-                          text: 'Subir oferta',
-                          onPressed: () {
-                            ofertaProvider.subirOfertaLaboral(context);
-                          },
-                        ),
-                      )
-                    else if (ofertaProvider.isUpload)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30),
-                          child: ofertaProvider.isDeleting
-                              ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                              : BotonComun(
-                            color: AppColors.azulClaro,
-                            text: 'Eliminar oferta',
-                            onPressed: () {
-                              ofertaProvider.eliminarOfertaLaboral(context);
-                            },
-                          ),
-                        ),
+                    ofertaProvider.isLoading
+                    ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                    : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: BotonComun(
+                        color: AppColors.azulClaro,
+                        text: 'Subir oferta',
+                        onPressed: () {
+                          ofertaProvider.subirOfertaLaboral(context);
+                        },
+                      ),
+                    )
+                  else if (ofertaProvider.isUpload)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: ofertaProvider.isDeleting
+                      ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+                      : BotonComun(
+                        color: AppColors.azulClaro,
+                        text: 'Eliminar oferta',
+                        onPressed: () {
+                          ofertaProvider.eliminarOfertaLaboral(context);
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),
