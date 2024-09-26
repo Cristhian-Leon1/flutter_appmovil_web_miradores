@@ -62,7 +62,7 @@ class MiradorService {
     return await _storageService.uploadImage(userId, image, carpeta);
   }
 
-  Future<void> actualizarMirador(BuildContext context) async {
+  Future<void> actualizarMirador(BuildContext context, Map<String, dynamic> updatedData) async {
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
     final miradorProvider = Provider.of<PanelMiradorProvider>(context, listen: false);
     try {
@@ -72,27 +72,32 @@ class MiradorService {
           .get();
       if (query.docs.isNotEmpty) {
         DocumentReference docRef = query.docs.first.reference;
-        await docRef.update({
-          'name': miradorProvider.mirador.name,
-          'description': miradorProvider.mirador.description,
-          'address': miradorProvider.mirador.address,
-          'phone': miradorProvider.mirador.phone,
-          'email': miradorProvider.mirador.email,
-          'instagram': miradorProvider.mirador.instagram,
-          'facebook': miradorProvider.mirador.facebook,
-          'servicios': miradorProvider.mirador.servicios,
-          'hora': miradorProvider.mirador.hora,
-        });
-        if (miradorProvider.mirador.image != null) {
-          String? imageUrl =
-            await _storageService.uploadImage(docRef.id, miradorProvider.mirador.image, 'mirador_images');
-          await docRef.update({'image': imageUrl});
+
+        // Handle image upload if 'image' key is present
+        if (updatedData.containsKey('image') && miradorProvider.mirador.image != null) {
+          String? imageUrl = await _storageService.uploadImage(docRef.id, miradorProvider.mirador.image, 'mirador_images');
+          updatedData['image'] = imageUrl;
         }
-        if (miradorProvider.mirador.images != null) {
-          List<String>? imageUrls =
-            (await _storageService.uploadImages(docRef.id, miradorProvider.mirador.images, 'mirador_images')).cast<String>();
-          await docRef.update({'images': imageUrls});
+
+        // Handle images upload if 'images' key is present
+        if (updatedData.containsKey('images') && miradorProvider.mirador.images.isNotEmpty) {
+          List<String?> imageUrls = await _storageService.uploadImages(docRef.id, miradorProvider.mirador.images, 'mirador_images');
+          imageUrls.removeWhere((url) => url == null); // Remove null URLs
+          DocumentSnapshot docSnapshot = await docRef.get();
+          Map<String, dynamic> docData = docSnapshot.data() as Map<String, dynamic>;
+          List<String> existingImages = List<String>.from(docData['images'] ?? []);
+          for (int i = 0; i < imageUrls.length && i < 5; i++) {
+            if (i < existingImages.length) {
+              existingImages[i] = imageUrls[i]!;
+            } else {
+              existingImages.add(imageUrls[i]!);
+            }
+          }
+          updatedData['images'] = existingImages.sublist(0, 5); // Ensure the list has at most 5 images
         }
+
+        // Update Firestore document
+        await docRef.update(updatedData);
       }
     } catch (e) {
       print('Error al actualizar mirador: $e');

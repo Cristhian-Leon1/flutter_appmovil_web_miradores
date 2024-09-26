@@ -37,4 +37,19 @@ class EventoService {
       return [];
     }
   }
+
+  Future<void> eliminarEvento(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('Eventos')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      for (var doc in querySnapshot.docs) {
+        await _firestore.collection('Eventos').doc(doc.id).delete();
+      }
+    } catch (e) {
+      print('Error al eliminar evento: $e');
+    }
+  }
 }

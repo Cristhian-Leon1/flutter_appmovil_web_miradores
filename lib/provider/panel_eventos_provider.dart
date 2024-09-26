@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/modelos/evento_modelo.dart';
 import 'package:pueblito_viajero/servicios/evento_service.dart';
 
-import '../servicios/mirador_service.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
 import 'iniciar_sesion_provider.dart';
 
@@ -20,8 +19,12 @@ class EventosProvider with ChangeNotifier {
 
   final ImagePickerService _imagePickerService = ImagePickerService();
   final EventoService _eventoService = EventoService();
+  EventoModel? _selectedEvent;
+  EventoModel? get selectedEvent => _selectedEvent;
+
 
   bool isLoading = false;
+  bool coincidenIds = false;
 
   DateTime? _selectedDay;
   DateTime? get selectedDay => _selectedDay;
@@ -103,6 +106,18 @@ class EventosProvider with ChangeNotifier {
     }
   }
 
+  Future<void> eliminarEvento(String userId) async {
+    try {
+      await _eventoService.eliminarEvento(userId);
+      eventos.forEach((key, value) {
+        value.removeWhere((evento) => evento.userId == userId);
+      });
+      notifyListeners();
+    } catch (e) {
+      print('Error al eliminar evento: $e');
+    }
+  }
+
   List<EventoModel> getEventsForDay(DateTime day) {
     return eventos[day] ?? [];
   }
@@ -142,5 +157,15 @@ class EventosProvider with ChangeNotifier {
     precioController.clear();
     horaController.clear();
     descripcionController.clear();
+  }
+
+  void selectEvent(EventoModel event) {
+    _selectedEvent = event;
+    notifyListeners();
+  }
+
+  void clearSelectedEvent() {
+    _selectedEvent = null;
+    notifyListeners();
   }
 }

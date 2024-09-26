@@ -38,7 +38,7 @@ class HorarioSeccion extends StatelessWidget {
                   ),
                 ),
                 miradorProvider.horarioEdit
-                    ? Padding(
+                ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -90,12 +90,12 @@ class HorarioSeccion extends StatelessWidget {
                     ],
                   ),
                 )
-                    : Text(
+                : Text(
                   horario_1 == '' && horario_3 == ''
-                      ? '0:00 AM - 0:00 PM'
-                      : horario_1 == '' ? horario_3!.toUpperCase()
-                      : horario_3 == '' ? horario_1!.toUpperCase()
-                      : '',
+                  ? '0:00 AM - 0:00 PM'
+                  : horario_1 == '' ? horario_3!.toUpperCase()
+                  : horario_3 == '' ? horario_1!.toUpperCase()
+                  : miradorProvider.horarios[0]!.toUpperCase(),
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,
@@ -111,7 +111,7 @@ class HorarioSeccion extends StatelessWidget {
                   ),
                 ),
                 miradorProvider.horarioEdit
-                    ? Padding(
+                ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -163,12 +163,12 @@ class HorarioSeccion extends StatelessWidget {
                     ],
                   ),
                 )
-                    : Text(
+                : Text(
                   horario_2 == '' && horario_4 == ''
-                      ? '0:00 AM - 0:00 PM'
-                      : horario_2 == '' ? horario_4!.toUpperCase()
-                      : horario_4 == '' ? horario_2!.toUpperCase()
-                      : '',
+                  ? '0:00 AM - 0:00 PM'
+                  : horario_2 == '' ? horario_4!.toUpperCase()
+                  : horario_4 == '' ? horario_2!.toUpperCase()
+                  : miradorProvider.horarios[1]!.toUpperCase(),
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black,

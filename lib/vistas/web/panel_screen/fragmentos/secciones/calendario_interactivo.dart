@@ -63,6 +63,12 @@ class CalendarioInteractivo extends StatelessWidget {
               ),
               onDaySelected: (selectedDay, focusedDay) {
                 eventosProvider.onDaySelected(selectedDay, focusedDay);
+                List<EventoModel> events = eventosProvider.getEventsForDay(selectedDay);
+                if (events.isNotEmpty) {
+                  eventosProvider.selectEvent(events.first);
+                } else {
+                  eventosProvider.clearSelectedEvent();
+                }
               },
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, day, events) {
@@ -71,6 +77,7 @@ class CalendarioInteractivo extends StatelessWidget {
                     return const SizedBox.shrink();
                   }
                   bool isUserEvent = eventos.any((evento) => evento.userId == sesionProvider.usuario.id);
+                  eventosProvider.coincidenIds = isUserEvent;
                   return Container(
                     decoration: BoxDecoration(
                       color: isUserEvent ? Colors.green : Colors.yellow,

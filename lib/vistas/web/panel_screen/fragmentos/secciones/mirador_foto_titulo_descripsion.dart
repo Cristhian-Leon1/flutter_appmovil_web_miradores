@@ -167,8 +167,8 @@ class TituloImagenSeccion extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child:
               miradorProvider.isLoading
-                  ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                  : BotonComun(
+              ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+              : BotonComun(
                 color: AppColors.azulClaro,
                 text: sesionProvider.tieneMirador ? 'Actualizar' : 'Registrar',
                 onPressed: () async {

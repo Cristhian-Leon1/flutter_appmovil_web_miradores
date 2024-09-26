@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../modelos/evento_modelo.dart';
 import '../modelos/mirador_modelo.dart';
 import '../servicios/mirador_service.dart';
+import '../servicios/storage_service.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
 import 'iniciar_sesion_provider.dart';
 
@@ -38,6 +39,7 @@ class PanelMiradorProvider with ChangeNotifier {
   final ImagePickerService _imagePickerService = ImagePickerService();
   final MiradorService _miradorService = MiradorService();
 
+  late List<String?> horarios = List.filled(2, '');
 
   PanelMiradorProvider() {
     nameController.text = mirador.name;
@@ -59,6 +61,8 @@ class PanelMiradorProvider with ChangeNotifier {
     horario3FocusNode.addListener(() => clearOnFocus(horario3Controller, horario3FocusNode));
     horario4FocusNode.addListener(() => clearOnFocus(horario4Controller, horario4FocusNode));
   }
+
+  final StorageService _storageService = StorageService();
 
   int currentImageIndex = 0;
   List<dynamic> tempImages = [];
@@ -251,10 +255,42 @@ class PanelMiradorProvider with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      await _miradorService.actualizarMirador(context);
+      Map<String, dynamic> updatedData = {};
+
+      if (nombreDescripcionCheck) {
+        updatedData['name'] = mirador.name;
+        updatedData['description'] = mirador.description;
+      }
+      if (imagenCheck) {
+        updatedData['image'] = mirador.image;
+      }
+      if (imagenesCheck) {
+        updatedData['images'] = mirador.images;
+      }
+      if (contactoCheck) {
+        updatedData['address'] = mirador.address;
+        updatedData['phone'] = mirador.phone;
+        updatedData['email'] = mirador.email;
+        updatedData['instagram'] = mirador.instagram;
+        updatedData['facebook'] = mirador.facebook;
+      }
+      if (serviciosCheck) {
+        updatedData['servicios'] = mirador.servicios;
+      }
+      if (horarioCheck) {
+        updatedData['hora'] = mirador.hora;
+      }
+
+      await _miradorService.actualizarMirador(context, updatedData);
+
     } catch (e) {
-      print('Error al actualizar mirador: $e');
+      print('Error updating mirador: $e');
     } finally {
+      imagenCheck = false;
+      imagenesCheck = false;
+      contactoCheck = false;
+      serviciosCheck = false;
+      horarioCheck = false;
       isLoading = false;
       notifyListeners();
     }
@@ -268,7 +304,6 @@ class PanelMiradorProvider with ChangeNotifier {
     final text2 = '${controllerHorario2.text.isEmpty ? '00:00' : controllerHorario2.text} $horario2AmPm';
     final text3 = '${controllerHorario3.text.isEmpty ? '00:00' : controllerHorario3.text} $horario3AmPm';
     final text4 = '${controllerHorario4.text.isEmpty ? '00:00' : controllerHorario4.text} $horario4AmPm';
-    final List<String?> horarios = List.filled(2, null);
 
     horarios[0] = '$text1 - $text2';
     horarios[1] = '$text3 - $text4';
