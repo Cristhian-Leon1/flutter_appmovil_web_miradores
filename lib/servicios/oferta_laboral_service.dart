@@ -34,6 +34,17 @@ class OfertaLaboralService {
     }
   }
 
+  Future<List<String>> obtenerTodasLasOfertasLaborales() async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('OfertasLaborales').get();
+      List<String> imageUrls = querySnapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
+      return imageUrls;
+    } catch (e) {
+      print('Error al obtener todas las ofertas laborales: $e');
+      return [];
+    }
+  }
+
   Future<void> eliminarOfertaLaboral(String userId) async {
     try {
       QuerySnapshot query = await _firestore.collection('OfertasLaborales')

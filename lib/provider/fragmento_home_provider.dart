@@ -33,4 +33,8 @@ class HomeProvider with ChangeNotifier {
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
     return await _ofertaLaboralService.obtenerOfertasLaborales(sesionProvider.usuario.id);
   }
+
+  Future<List<String>> obtenerTodasLasOfertasLaborales() async {
+    return await _ofertaLaboralService.obtenerTodasLasOfertasLaborales();
+  }
 }

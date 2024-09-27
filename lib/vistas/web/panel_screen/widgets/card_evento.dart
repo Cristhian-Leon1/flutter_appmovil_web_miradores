@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class CardEvento extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Container(
+            height: kIsWeb ? null : 550,
             width: 340,
             padding: const EdgeInsets.all(15),
             child: Column(
@@ -95,18 +97,20 @@ class CardEvento extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     if (coincidenIds)
+                      kIsWeb ?
                       TextButton(
                         onPressed: () async {
                           await eventosProvider.eliminarEvento(sesionProvider.usuario.id);
                           eventosProvider.clearSelectedEvent();
                         },
-                        child: const Text('Eliminar', style: TextStyle(color: AppColors.azulClaro)),
-                      ),
+                        child: const Text('Eliminar', style: TextStyle(color:AppColors.azulClaro)),
+                      )
+                      : const SizedBox(),
                     TextButton(
                       onPressed: () {
                         eventosProvider.clearSelectedEvent();
                       },
-                      child: const Text('OK', style: TextStyle(color: AppColors.azulClaro)),
+                      child: const Text('OK', style: TextStyle(color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido)),
                     ),
                   ],
                 ),
