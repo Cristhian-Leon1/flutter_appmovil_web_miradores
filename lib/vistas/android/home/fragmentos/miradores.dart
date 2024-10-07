@@ -6,7 +6,8 @@ import '../../../../provider/fragmento_miradores_provider.dart';
 import '../widgets/card_miradores.dart';
 
 class MiradoresFragmento extends StatefulWidget {
-  const MiradoresFragmento({super.key});
+  final String tipo;
+  const MiradoresFragmento({super.key, required this.tipo});
 
   @override
   _MiradoresFragmentoState createState() => _MiradoresFragmentoState();
@@ -36,7 +37,7 @@ class _MiradoresFragmentoState extends State<MiradoresFragmento> {
                 child: ListView.builder(
                   itemCount: provider.miradores.length,
                   itemBuilder: (context, index) {
-                    return CardMirador(mirador: provider.miradores[index]);
+                    return CardMirador(mirador: provider.miradores[index], tipo: widget.tipo);
                   },
                 ),
               ),

@@ -7,8 +7,9 @@ import '../fragmentos/secciones/mirador_informacion.dart';
 
 class CardMirador extends StatelessWidget {
   final MiradorModel mirador;
+  final String tipo;
 
-  const CardMirador({required this.mirador, super.key});
+  const CardMirador({required this.mirador, required this.tipo, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class CardMirador extends StatelessWidget {
           ),
           child: Container(
             width: double.infinity,
-            height: 180,
+            height: tipo == 'informacion' ? 150 : 180,
             padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -79,13 +80,14 @@ class CardMirador extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    InteractiveStars(miradorId: mirador.id),
-                    InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
-                  ],
-                ),
+                if (tipo != 'informacion')
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      InteractiveStars(miradorId: mirador.id),
+                      InteractiveFavorite(miradorId: mirador.id, favoritos: mirador.favoritos),
+                    ],
+                  ),
               ],
             ),
           ),

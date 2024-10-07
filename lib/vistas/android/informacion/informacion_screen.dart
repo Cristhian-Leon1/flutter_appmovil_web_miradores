@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:pueblito_viajero/vistas/android/home/fragmentos/miradores.dart';
 
 class InformationPage extends StatelessWidget {
   const InformationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: EdgeInsets.only(top: 30),
+          child: MiradoresFragmento(tipo: 'informacion',),
+        )
+      ),
+    );
   }
 }

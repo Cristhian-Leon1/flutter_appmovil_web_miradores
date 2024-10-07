@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   late Timer _timer;
 
   List fragmentos = [
-    const HomeFragmento(), const EventosFragmento(), const MiradoresFragmento(), const FavoritosFragmento(), const PerfilFragmento()
+    const HomeFragmento(), const EventosFragmento(), const MiradoresFragmento(tipo: ''), const FavoritosFragmento(), const PerfilFragmento()
   ];
 
   @override

@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../modelos/usuario_model.dart';
 import '../servicios/autenticacion_service.dart';
 import '../vistas/android/bienvenida/bienvenida_screen.dart';
-import '../vistas/android/iniciar_sesion/iniciar_sesion_screen.dart';
+import '../vistas/android/start/start_screen.dart';
 import 'fragmento_home_provider.dart';
 
 class IniciarSesionProvider with ChangeNotifier {
@@ -148,7 +148,7 @@ class IniciarSesionProvider with ChangeNotifier {
     homeProvider.resetVariables();
 
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const IniciarSesionPage()),
+      MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const StartPage()),
           (Route<dynamic> route) => false,
     );
   }

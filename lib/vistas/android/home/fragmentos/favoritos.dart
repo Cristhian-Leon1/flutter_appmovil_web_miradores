@@ -34,7 +34,7 @@ class FavoritosFragmento extends StatelessWidget {
             child: ListView.builder(
               itemCount: favoritos.length,
               itemBuilder: (context, index) {
-                return CardMirador(mirador: favoritos[index]);
+                return CardMirador(mirador: favoritos[index], tipo: 'user');
               },
             ),
           ),
