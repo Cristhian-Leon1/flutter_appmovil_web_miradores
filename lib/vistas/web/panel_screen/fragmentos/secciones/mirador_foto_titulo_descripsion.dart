@@ -76,7 +76,7 @@ class TituloImagenSeccion extends StatelessWidget {
                     },
                     onCheck: () {
                       miradorProvider.cambiarMarca();
-                  },
+                  }, type: 'imagen',
                   )
                 )
               ],

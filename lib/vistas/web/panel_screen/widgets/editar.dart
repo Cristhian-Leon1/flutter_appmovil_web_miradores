@@ -95,6 +95,7 @@ class EditarWidgetEliminar extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
   final VoidCallback onCheck;
+  final String type;
   final int id;
 
   const EditarWidgetEliminar({
@@ -103,6 +104,7 @@ class EditarWidgetEliminar extends StatelessWidget {
     required this.onDelete,
     required this.onCheck,
     required this.id,
+    required this.type,
   });
 
   @override
@@ -129,7 +131,12 @@ class EditarWidgetEliminar extends StatelessWidget {
                 onTap: onCheck,
                 child: id == 1
                 ? Icon(Icons.check_outlined, color: miradorProvider.imagenCheck ? AppColors.verdeDivertido :  null)
-                : Icon(Icons.check_outlined, color: miradorProvider.imagenesCheck ? AppColors.verdeDivertido :  null)
+                : Icon(
+                  Icons.check_outlined,
+                  color:
+                  type == 'imagen' ? miradorProvider.imagenesCheck ? AppColors.verdeDivertido : null :
+                  type == 'mapa' ? miradorProvider.mapaCheck ? AppColors.verdeDivertido : null : null
+                )
               ),
               Divider(thickness: 1, color: Colors.grey[300]),
               GestureDetector(

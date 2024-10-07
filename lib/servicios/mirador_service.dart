@@ -51,6 +51,8 @@ class MiradorService {
         'facebook': mirador.facebook,
         'servicios': mirador.servicios,
         'hora': mirador.hora,
+        'location': mirador.location,
+        'mapa': mirador.mapa,
       });
       documentId = docRef.id;
     } catch (e) {
@@ -73,16 +75,16 @@ class MiradorService {
       if (query.docs.isNotEmpty) {
         DocumentReference docRef = query.docs.first.reference;
 
-        // Handle image upload if 'image' key is present
         if (updatedData.containsKey('image') && miradorProvider.mirador.image != null) {
           String? imageUrl = await _storageService.uploadImage(docRef.id, miradorProvider.mirador.image, 'mirador_images');
           updatedData['image'] = imageUrl;
         }
-
-        // Handle images upload if 'images' key is present
+        if (updatedData.containsKey('location')) {
+          updatedData['location'] = miradorProvider.mirador.location;
+        }
         if (updatedData.containsKey('images') && miradorProvider.mirador.images.isNotEmpty) {
           List<String?> imageUrls = await _storageService.uploadImages(docRef.id, miradorProvider.mirador.images, 'mirador_images');
-          imageUrls.removeWhere((url) => url == null); // Remove null URLs
+          imageUrls.removeWhere((url) => url == null);
           DocumentSnapshot docSnapshot = await docRef.get();
           Map<String, dynamic> docData = docSnapshot.data() as Map<String, dynamic>;
           List<String> existingImages = List<String>.from(docData['images'] ?? []);
@@ -93,10 +95,12 @@ class MiradorService {
               existingImages.add(imageUrls[i]!);
             }
           }
-          updatedData['images'] = existingImages.sublist(0, 5); // Ensure the list has at most 5 images
+          updatedData['images'] = existingImages.sublist(0, 5);
         }
 
-        // Update Firestore document
+        if (miradorProvider.mapaCheck) {
+          updatedData['mapa'] = miradorProvider.mirador.mapa;
+        }
         await docRef.update(updatedData);
       }
     } catch (e) {

@@ -18,6 +18,7 @@ class PanelMiradorProvider with ChangeNotifier {
   final TextEditingController instagramController = TextEditingController();
   final TextEditingController facebookController = TextEditingController();
   final TextEditingController serviciosController = TextEditingController();
+  final TextEditingController mapaController = TextEditingController();
   final TextEditingController horario1Controller = TextEditingController(text: '00:00');
   final TextEditingController horario2Controller = TextEditingController(text: '00:00');
   final TextEditingController horario3Controller = TextEditingController(text: '00:00');
@@ -35,6 +36,7 @@ class PanelMiradorProvider with ChangeNotifier {
   final FocusNode horario2FocusNode = FocusNode();
   final FocusNode horario3FocusNode = FocusNode();
   final FocusNode horario4FocusNode = FocusNode();
+  final FocusNode mapaFocusNode = FocusNode();
 
   final ImagePickerService _imagePickerService = ImagePickerService();
   final MiradorService _miradorService = MiradorService();
@@ -86,6 +88,8 @@ class PanelMiradorProvider with ChangeNotifier {
   bool serviciosEdit = false;
   bool horarioCheck = false;
   bool horarioEdit = false;
+  bool mapaCheck = false;
+  bool mapaEdit = false;
   bool nombreDescripcionCheck = false;
   bool nombreDescripcionEdit= false;
 
@@ -103,6 +107,7 @@ class PanelMiradorProvider with ChangeNotifier {
     facebook: '',
     servicios: [],
     hora: ['', ''],
+    mapa: '',
   );
 
   void agregarValor(TextEditingController controller, String tipo) {
@@ -130,6 +135,9 @@ class PanelMiradorProvider with ChangeNotifier {
         case 'facebook':
           mirador.actualizarFacebook(valor);
           break;
+        case 'mapa':
+          mirador.actualizarMapa(valor);
+          break;
       }
       controller.clear();
     }
@@ -149,6 +157,7 @@ class PanelMiradorProvider with ChangeNotifier {
       'facebook': mirador.facebook,
       'servicios': mirador.servicios,
       'hora': mirador.hora,
+      'mapa': mirador.mapa,
     };
   }
 
@@ -163,7 +172,6 @@ class PanelMiradorProvider with ChangeNotifier {
           final bytes = await image.readAsBytes();
           imageFiles.add(bytes);
         } else if (image is String) {
-          // Handle string image paths if necessary
         } else {
           throw Exception('Unsupported image type');
         }
@@ -246,6 +254,12 @@ class PanelMiradorProvider with ChangeNotifier {
     } catch (e) {
       print('Error al registrar mirador: $e');
     } finally {
+      imagenCheck = false;
+      imagenesCheck = false;
+      contactoCheck = false;
+      serviciosCheck = false;
+      horarioCheck = false;
+      mapaCheck = false;
       isLoading = false;
       notifyListeners();
     }
@@ -281,6 +295,7 @@ class PanelMiradorProvider with ChangeNotifier {
         updatedData['hora'] = mirador.hora;
       }
 
+
       await _miradorService.actualizarMirador(context, updatedData);
 
     } catch (e) {
@@ -291,6 +306,7 @@ class PanelMiradorProvider with ChangeNotifier {
       contactoCheck = false;
       serviciosCheck = false;
       horarioCheck = false;
+      mapaCheck = false;
       isLoading = false;
       notifyListeners();
     }
@@ -423,6 +439,18 @@ class PanelMiradorProvider with ChangeNotifier {
 
   void actualizarImagen(int index) {
     currentImageIndex = index;
+    notifyListeners();
+  }
+
+  void cambiarMarcaMapa() {
+    mapaEdit = false;
+    mapaCheck ? mapaCheck : mapaCheck = !mapaCheck;
+    notifyListeners();
+  }
+
+  void cambiarMarcaMapaEdit() {
+    mapaCheck = false;
+    mapaEdit = !mapaEdit;
     notifyListeners();
   }
 }

@@ -7,10 +7,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:pueblito_viajero/provider/fragmento_home_provider.dart';
 import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
-import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
-import 'package:pueblito_viajero/provider/fragmento_perfil_provider.dart';
 import 'package:pueblito_viajero/provider/fragmento_perfil_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
+import 'package:pueblito_viajero/utils/librerias/webview_mobile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pueblito_viajero/provider/panel_eventos_provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
@@ -34,6 +33,7 @@ import 'package:pueblito_viajero/vistas/android/splash/splash_screen.dart';
 import 'package:pueblito_viajero/vistas/android/start/start_screen.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/panel_screen.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_screen.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'servicios/firebase_options.dart';
 
@@ -43,6 +43,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  if (kIsWeb) {
+    WebViewPlatform.instance = getWebViewPlatform();
+  }
   runApp(const MyApp());
 }
 
@@ -54,7 +57,6 @@ class MyApp extends StatelessWidget {
     if (!kIsWeb) {
       FlutterStatusbarcolor.setStatusBarColor(Colors.white);
       FlutterStatusbarcolor.setNavigationBarColor(Colors.transparent);
-
       SystemChrome.setEnabledSystemUIMode(
           SystemUiMode.manual,
           overlays: [SystemUiOverlay.top]
@@ -115,9 +117,9 @@ class MaterialAppWithTheme extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido
-            )
+              child: CircularProgressIndicator(
+                  color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido
+              )
           );
         } else {
           final data = snapshot.data as Map<String, dynamic>;
@@ -164,4 +166,3 @@ class MaterialAppWithTheme extends StatelessWidget {
     };
   }
 }
-

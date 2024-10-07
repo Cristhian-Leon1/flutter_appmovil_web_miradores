@@ -85,7 +85,7 @@ class ImagenesMiradorSeccion extends StatelessWidget {
                 },
                 onCheck: () {
                   miradorProvider.cambiarMarcaImagenes();
-                },
+                }, type: 'imagen',
               ),
             ),
           ],

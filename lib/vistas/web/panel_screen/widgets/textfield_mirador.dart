@@ -11,7 +11,8 @@ class TextFieldNombreMirador extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
-    required this.focusNode, required this.keyboardType,
+    required this.focusNode,
+    required this.keyboardType,
   });
 
   @override

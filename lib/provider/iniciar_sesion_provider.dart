@@ -49,6 +49,7 @@ class IniciarSesionProvider with ChangeNotifier {
                           facebook: '',
                           servicios: [],
                           hora: [],
+                          mapa: '',
   );
 
   void agregarValor(TextEditingController controller, String tipo) {

@@ -25,7 +25,7 @@ class MiradorHorario extends StatelessWidget {
               width: double.infinity,
               child: Center(
                 child: Text(
-                  'Información de contacto',
+                  'Horario',
                   style: GoogleFonts.inter(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

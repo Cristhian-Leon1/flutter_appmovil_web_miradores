@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pueblito_viajero/vistas/android/home/fragmentos/secciones/mirador_contacto.dart';
 import 'package:pueblito_viajero/vistas/android/home/fragmentos/secciones/mirador_horario.dart';
-import 'package:pueblito_viajero/vistas/android/home/fragmentos/secciones/mirador_mapa.dart';
 import 'package:pueblito_viajero/vistas/android/home/fragmentos/secciones/mirador_servicios.dart';
-import 'package:pueblito_viajero/vistas/android/home/fragmentos/secciones/mirador_titulo_slider_descripcion.dart';
+import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/card_mapa_stub.dart';
 import '../../../../../modelos/mirador_modelo.dart';
+import 'mirador_titulo_slider_descripcion.dart';
 
 class InformacionMirador extends StatelessWidget {
   final MiradorModel mirador;
@@ -28,7 +28,9 @@ class InformacionMirador extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MiradorContacto(mirador: mirador),
-                    const MiradorMapa(),
+                    const SizedBox(height: 15),
+                    CardGoogleMaps(src: mirador.mapa, name: mirador.name),
+                    const SizedBox(height: 15),
                     MiradorHorario(mirador: mirador),
                     MiradorServicios(mirador: mirador)
                   ],
@@ -41,3 +43,4 @@ class InformacionMirador extends StatelessWidget {
     );
   }
 }
+
