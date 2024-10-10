@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../modelos/evento_modelo.dart';
 import '../../../../provider/iniciar_sesion_provider.dart';
@@ -18,6 +19,10 @@ class CardEvento extends StatelessWidget {
     final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
 
     bool coincidenIds = event.userId == sesionProvider.usuario.id;
+
+    String formattedDate = event.fecha != null
+        ? DateFormat('d \'de\' MMMM', 'es_ES').format(event.fecha!)
+        : '';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -83,7 +88,7 @@ class CardEvento extends StatelessWidget {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               TextSpan(
-                                text: event.fecha?.toIso8601String(),
+                                text: formattedDate,
                               ),
                             ],
                           ),

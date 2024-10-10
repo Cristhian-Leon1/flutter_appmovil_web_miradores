@@ -41,4 +41,16 @@ class AutenticacionService {
       print('Error during logout: $e');
     }
   }
+
+  Future<String?> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    } catch (e) {
+      print('Error sending password reset email: $e');
+      return 'unknown-error';
+    }
+  }
 }

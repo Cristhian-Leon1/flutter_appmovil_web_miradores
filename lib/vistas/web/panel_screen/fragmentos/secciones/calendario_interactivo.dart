@@ -70,6 +70,9 @@ class CalendarioInteractivo extends StatelessWidget {
                   eventosProvider.clearSelectedEvent();
                 }
               },
+              onPageChanged: (focusedDay) {
+                eventosProvider.onDaySelected(eventosProvider.selectedDay ?? focusedDay, focusedDay);
+              },
               calendarBuilders: CalendarBuilders(
                 markerBuilder: (context, day, events) {
                   List<EventoModel> eventos = eventosProvider.getEventsForDay(day);

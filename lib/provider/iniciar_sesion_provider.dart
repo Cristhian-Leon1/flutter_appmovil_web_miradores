@@ -19,6 +19,8 @@ class IniciarSesionProvider with ChangeNotifier {
   final FocusNode passwordFocusNode = FocusNode();
 
   bool isLoading = false;
+  bool isLoading_2 = false;
+  bool isForgetPassword = false;
   bool authProcess = false;
   bool tieneMirador = false;
   bool isPasswordVisible = true;
@@ -194,6 +196,80 @@ class IniciarSesionProvider with ChangeNotifier {
   void toggleAuthProcessFalse() {
     authProcess = false;
     notifyListeners();
+  }
+
+  void cambiarMarcaForgetPassword() {
+    isForgetPassword = true;
+    notifyListeners();
+  }
+
+  void cambiarMarcaForgetPasswordFalse() {
+    isForgetPassword = false;
+    notifyListeners();
+  }
+
+  Future<void> sendPasswordResetEmail(BuildContext context) async {
+    isLoading_2 = true;
+    notifyListeners();
+
+    String? result = await _autenticacionService.sendPasswordResetEmail(emailController.text);
+    isLoading_2 = false;
+    notifyListeners();
+
+    if (result == null) {
+      showSuccessDialog(context, 'Se ha enviado un enlace de recuperación a tu correo.');
+    } else {
+      showErrorDialog_2(context, _getErrorMessage(result), result);
+    }
+  }
+
+  String _getErrorMessage(String errorCode) {
+    switch (errorCode) {
+      case 'user-not-found':
+        return 'El correo electrónico no está registrado.';
+      default:
+        return 'Error al enviar el enlace de recuperación. Inténtalo de nuevo.';
+    }
+  }
+
+  void showErrorDialog_2(BuildContext context, String message, String type) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: type == 'user-not-found' ? const Text('Correo no registrado') : const Text('Error'),
+          content: Text(message, style: const TextStyle(fontSize: 16)),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK', style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showSuccessDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Éxito'),
+          content: Text(message, style: const TextStyle(fontSize: 16)),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK', style: TextStyle(color: Colors.blue)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void disposeControllers() {

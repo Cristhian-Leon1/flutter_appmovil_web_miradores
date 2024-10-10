@@ -17,7 +17,7 @@ class CardBarraSuperior extends StatelessWidget {
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15), // Rounded corners
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -34,22 +34,25 @@ class CardBarraSuperior extends StatelessWidget {
             ),
             Expanded(
                 flex: 4,
-                child: Center(
-                  child: Text(
-                    'PANEL ADMINISTRATIVO',
-                    style: GoogleFonts.inter(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.black,
-                      letterSpacing: 1,
-                      height: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Center(
+                    child: Text(
+                      'PANEL ADMINISTRATIVO',
+                      style: GoogleFonts.inter(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black,
+                        letterSpacing: 1,
+                        height: 1,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 )
             ),
             Expanded(
-                flex: 1,
+                flex: 2,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Row(
