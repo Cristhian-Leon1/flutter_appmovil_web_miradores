@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pueblito_viajero/vistas/android/iniciar_sesion/recuperar_contrasenia.dart';
 
 import '../../../provider/iniciar_sesion_provider.dart';
 import '../../../provider/registro_provider.dart';
@@ -65,7 +66,23 @@ class IniciarSesionPage extends StatelessWidget {
                             }
                           }
                         ),
-                        const Divider(height: 40),
+                        TextButton(
+                          onPressed: () {
+                            iniciarSesionProvider.cambiarMarcaForgetPassword();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RecuperarContraseniaPage()),
+                            );
+                          },
+                          child: const Text(
+                            '¿Olvidaste tu contraseña?',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16
+                            ),
+                          ),
+                        ),
+                        const Divider(height: 30),
                         const Text(
                           'Usar otra cuenta:',
                           textAlign: TextAlign.center,
