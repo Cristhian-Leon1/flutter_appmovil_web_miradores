@@ -116,7 +116,7 @@ class _BienvenidaPageState extends State<BienvenidaPage> {
               ],
             ),
             Positioned(
-              top: (MediaQuery.of(context).size.height * (kIsWeb ? 0.13 : 0.45) / 3) + 20,
+              top: (MediaQuery.of(context).size.height * (kIsWeb ? 0.13 : 0.38) / 3) + 20,
               left: (MediaQuery.of(context).size.width - 190) / 2,
               child: Image.asset('assets/logo.png', height: 230),
             )

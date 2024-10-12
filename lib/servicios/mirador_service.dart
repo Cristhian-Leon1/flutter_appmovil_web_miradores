@@ -51,7 +51,6 @@ class MiradorService {
         'facebook': mirador.facebook,
         'servicios': mirador.servicios,
         'hora': mirador.hora,
-        'location': mirador.location,
         'mapa': mirador.mapa,
       });
       documentId = docRef.id;
@@ -78,9 +77,6 @@ class MiradorService {
         if (updatedData.containsKey('image') && miradorProvider.mirador.image != null) {
           String? imageUrl = await _storageService.uploadImage(docRef.id, miradorProvider.mirador.image, 'mirador_images');
           updatedData['image'] = imageUrl;
-        }
-        if (updatedData.containsKey('location')) {
-          updatedData['location'] = miradorProvider.mirador.location;
         }
         if (updatedData.containsKey('images') && miradorProvider.mirador.images.isNotEmpty) {
           List<String?> imageUrls = await _storageService.uploadImages(docRef.id, miradorProvider.mirador.images, 'mirador_images');
@@ -162,6 +158,19 @@ class MiradorService {
           .toList();
     } catch (e) {
       print('Error al buscar miradores: $e');
+      return [];
+    }
+  }
+
+  Future<List<MiradorModel>> obtenerFavoritosDirectamente(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('Miradores')
+          .where('favoritos', arrayContains: userId)
+          .get();
+      return querySnapshot.docs.map((doc) =>
+          MiradorModel.fromMap(doc.data() as Map<String, dynamic>, doc.id)).toList();
+    } catch (e) {
+      print('Error al obtener favoritos: $e');
       return [];
     }
   }

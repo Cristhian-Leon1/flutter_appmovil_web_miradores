@@ -15,7 +15,6 @@ class MiradorModel {
   List<String?> hora;
   List<String> favoritos;
   Map<String, int> calificaciones;
-  List<double> location;
 
   MiradorModel({
     required this.id,
@@ -34,7 +33,6 @@ class MiradorModel {
     required this.mapa,
     this.favoritos = const [],
     this.calificaciones = const {},
-    this.location = const [0.0, 0.0],
   });
 
   factory MiradorModel.fromMap(Map<String, dynamic> data, String documentId) {
@@ -54,7 +52,6 @@ class MiradorModel {
       hora: List<String>.from(data['hora'] ?? ['', '']),
       favoritos: List<String>.from(data['favoritos'] ?? []),
       calificaciones: Map<String, int>.from(data['calificaciones'] ?? {}),
-      location: List<double>.from(data['location'] ?? [0.0, 0.0]),
       mapa: data['mapa'] ?? '',
     );
   }

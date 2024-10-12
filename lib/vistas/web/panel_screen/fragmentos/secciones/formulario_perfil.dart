@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
+import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/inicio_sesion_fragmento.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
 import '../../../../../provider/panel_perfil_provider.dart';
+import '../../../../android/crear_cuenta/widgets/textfield_personalizable.dart';
 
 class FormularioPerfil extends StatelessWidget {
   const FormularioPerfil({super.key});
@@ -15,6 +17,7 @@ class FormularioPerfil extends StatelessWidget {
   Widget build(BuildContext context) {
     final perfilProvider = Provider.of<PerfilProvider>(context);
     final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+    var height = MediaQuery.of(context).size.height;
 
     Widget buildSectionTitle(String title) {
       return Text(
@@ -116,38 +119,62 @@ class FormularioPerfil extends StatelessWidget {
                   Expanded(
                     flex: 5,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextFieldNombreMirador(
-                          hintText: 'Contraseña',
-                          controller: perfilProvider.passwordController,
-                          focusNode: perfilProvider.passwordFocusNode,
-                          keyboardType: TextInputType.text,
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Correo:',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              TextFieldNombreMirador(
+                                hintText: 'Correo electrónico',
+                                controller: sesionProvider.emailController,
+                                focusNode: sesionProvider.emailFocusNode,
+                                keyboardType: TextInputType.text,
+                              ),
+                            ],
+                          ),
                         ),
+                        Expanded(
+                          flex: 2,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                sesionProvider.isLoading_2
+                                ? const CircularProgressIndicator(
+                                  color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,)
+                                : BotonComun(
+                                  color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
+                                  text: 'Enviar link de restablecimiento',
+                                  onPressed: () {
+                                    sesionProvider.sendPasswordResetEmail(context);
+                                  }
+                                ),
+                                BotonComun(
+                                  color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
+                                  text: 'Cancelar',
+                                  onPressed: (){
+                                    perfilProvider.updateSelectedOption(0);
+                                    sesionProvider.cambiarMarcaForgetPasswordFalse();
+                                  }
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     )
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          BotonComun(
-                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
-                            text: 'Actualizar',
-                            onPressed: (){}
-                          ),
-                          BotonComun(
-                            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
-                            text: 'Cancelar',
-                            onPressed: (){
-                              perfilProvider.updateSelectedOption(0);
-                            }
-                          )
-                        ],
-                      ),
-                    )
-                  )
                 ],
               )
               : perfilProvider.selectedOption == 3 ?

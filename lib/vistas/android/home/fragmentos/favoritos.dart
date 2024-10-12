@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
 import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/servicios/mirador_service.dart';
 import 'package:pueblito_viajero/vistas/android/home/widgets/card_miradores.dart';
+import 'package:pueblito_viajero/modelos/mirador_modelo.dart';
 
-class FavoritosFragmento extends StatelessWidget {
+class FavoritosFragmento extends StatefulWidget {
   const FavoritosFragmento({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final sesionProvider = Provider.of<IniciarSesionProvider>(context);
-    final miradoresProvider = Provider.of<MiradoresFragmentoProvider>(context);
-    final userId = sesionProvider.usuario.id;
-    final favoritos = miradoresProvider.obtenerFavoritos(userId);
+  _FavoritosFragmentoState createState() => _FavoritosFragmentoState();
+}
 
+class _FavoritosFragmentoState extends State<FavoritosFragmento> {
+  late List<MiradorModel> favoritos = [];
+  final MiradorService _miradorService = MiradorService();
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarFavoritos();
+  }
+
+  Future<void> _cargarFavoritos() async {
+    final sesionProvider = Provider.of<IniciarSesionProvider>(context, listen: false);
+    final userId = sesionProvider.usuario.id;
+    favoritos = await _miradorService.obtenerFavoritosDirectamente(userId);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(

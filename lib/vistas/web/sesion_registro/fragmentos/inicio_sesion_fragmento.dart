@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:pueblito_viajero/vistas/android/crear_cuenta/widgets/textfield_p
 import 'package:pueblito_viajero/vistas/android/iniciar_sesion/widgets/textfield_contrasenia.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
+import '../../../../provider/panel_perfil_provider.dart';
 import '../../../../provider/registro_provider.dart';
 
 class InicioSesionFragmento extends StatelessWidget {
@@ -125,8 +127,8 @@ class FormularioInicioSesion extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             sesionProvider.isLoading
-                ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
-                : BotonComun(
+            ? const Center(child: CircularProgressIndicator(color: AppColors.azulClaro))
+            : BotonComun(
                 color: AppColors.azulClaro,
                 text: 'INICIAR SESIÓN',
                 onPressed: () {
@@ -189,30 +191,41 @@ class ContraseniaOlvidadaFragmento extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sesionProvider = Provider.of<IniciarSesionProvider>(context);
+    final perfilProvider = Provider.of<PerfilProvider>(context);
     var height = MediaQuery.of(context).size.height;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        TextFieldPersonalizable(
-          labelText: 'Correo:',
-          hintText: 'Correo electrónico',
-          icon: Icons.mail_outline_rounded,
-          controller: sesionProvider.emailController,
-          keyboard: 'email',
-          focusNode: sesionProvider.emailFocusNode,
-          type: '1',
-        ),
-        SizedBox(height: height * 0.23),
-        sesionProvider.isLoading_2
-        ? const CircularProgressIndicator(color: AppColors.azulClaro)
-        : BotonComun(
-          color: AppColors.azulClaro,
-          text: 'ENVIAR LINK DE RESTABLECIMIENTO',
-          onPressed: () {
-            sesionProvider.sendPasswordResetEmail(context);
-          }
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          TextFieldPersonalizable(
+            labelText: 'Correo:',
+            hintText: 'Correo electrónico',
+            icon: Icons.mail_outline_rounded,
+            controller: sesionProvider.emailController,
+            keyboard: 'email',
+            focusNode: sesionProvider.emailFocusNode,
+            type: '1',
+          ),
+          SizedBox(height: height * 0.20),
+          sesionProvider.isLoading_2
+          ? const CircularProgressIndicator(color: AppColors.azulClaro)
+          : BotonComun(
+            color: AppColors.azulClaro,
+            text: 'ENVIAR LINK DE RESTABLECIMIENTO',
+            onPressed: () {
+              sesionProvider.sendPasswordResetEmail(context);
+            }
+          ),
+          BotonComun(
+            color: kIsWeb ? AppColors.azulClaro : AppColors.verdeDivertido,
+            text: 'CANCELAR',
+            onPressed: (){
+              perfilProvider.updateSelectedOption(0);
+              sesionProvider.cambiarMarcaForgetPasswordFalse();
+            }
+          )
+        ],
+      ),
     );
   }
 }
