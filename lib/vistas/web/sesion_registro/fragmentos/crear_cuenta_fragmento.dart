@@ -65,6 +65,7 @@ class CrearCuentaFragmento extends StatelessWidget {
                   onPressed: registroProvider.capturaInfo
                   ? () {
                     registroProvider.registrarUsuario(context);
+                    sesionProvider.togglePasswordVisibility();
                     registroProvider.siguienteWebFalse();
                   }
                   : () {

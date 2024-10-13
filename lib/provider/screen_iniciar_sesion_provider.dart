@@ -46,6 +46,7 @@ class IniciarSesionProvider with ChangeNotifier {
                           name: '',
                           description: '',
                           address: '',
+                          image: '',
                           phone: '',
                           email: '',
                           instagram: '',
