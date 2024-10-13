@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
-import 'package:pueblito_viajero/provider/registro_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_registro_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/captura_informacion_registro_fragmento.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/cargar_imagen_fragmento.dart';

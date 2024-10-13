@@ -9,17 +9,17 @@ import 'package:pueblito_viajero/provider/fragmento_home_provider.dart';
 import 'package:pueblito_viajero/provider/fragmento_miradores_provider.dart';
 import 'package:pueblito_viajero/provider/fragmento_perfil_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
-import 'package:pueblito_viajero/utils/librerias/webview_mobile.dart';
+import 'package:pueblito_viajero/utils/navegacion_librerias/webview_mobile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pueblito_viajero/provider/panel_eventos_provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/provider/panel_inicio_provider.dart';
 import 'package:pueblito_viajero/provider/panel_mirador_provider.dart';
 import 'package:pueblito_viajero/provider/panel_oferta_laboral_provider.dart';
 import 'package:pueblito_viajero/provider/panel_perfil_provider.dart';
-import 'package:pueblito_viajero/provider/registro_provider.dart';
-import 'package:pueblito_viajero/provider/servicios_provider.dart';
-import 'package:pueblito_viajero/provider/start_provider.dart';
+import 'package:pueblito_viajero/provider/screen_registro_provider.dart';
+import 'package:pueblito_viajero/provider/screen_servicios_provider.dart';
+import 'package:pueblito_viajero/provider/screen_start_provider.dart';
 import 'package:pueblito_viajero/vistas/android/bienvenida/bienvenida_screen.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/cargar_imagen_screen.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/crear_cuenta_1_screen.dart';
@@ -29,13 +29,13 @@ import 'package:pueblito_viajero/vistas/android/informacion/informacion_screen.d
 import 'package:pueblito_viajero/vistas/android/iniciar_sesion/iniciar_sesion_contrasenia_escreen.dart';
 import 'package:pueblito_viajero/vistas/android/iniciar_sesion/iniciar_sesion_screen.dart';
 import 'package:pueblito_viajero/vistas/android/servicios/servicios_screen.dart';
-import 'package:pueblito_viajero/vistas/android/splash/splash_screen.dart';
+import 'package:pueblito_viajero/vistas/android/splash/pantalla_splash.dart';
 import 'package:pueblito_viajero/vistas/android/start/start_screen.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/panel_screen.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'servicios/firebase_options.dart';
+import 'servicios/opciones_firebase.dart';
 
 Future<void> main() async {
   await initializeDateFormatting('es_ES', null);
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!kIsWeb) {
-      FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+      FlutterStatusbarcolor.setStatusBarColor(AppColors.blanco);
       FlutterStatusbarcolor.setNavigationBarColor(Colors.transparent);
       SystemChrome.setEnabledSystemUIMode(
           SystemUiMode.manual,
@@ -102,18 +102,18 @@ class MyApp extends StatelessWidget {
           create: (_) => FragmentoPerfilProvider(),
         ),
       ],
-      child: const MaterialAppWithTheme(),
+      child: const AplicacionInicial(),
     );
   }
 }
 
-class MaterialAppWithTheme extends StatelessWidget {
-  const MaterialAppWithTheme({super.key});
+class AplicacionInicial extends StatelessWidget {
+  const AplicacionInicial({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _checkLoginStatus(),
+      future: _comprobarEstadoDeLogin(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -125,20 +125,20 @@ class MaterialAppWithTheme extends StatelessWidget {
           final data = snapshot.data as Map<String, dynamic>;
           final isLoggedIn = data['isLoggedIn'] as bool;
 
-          String initialRoute;
+          String rutaInicial;
           if (kIsWeb) {
-            initialRoute = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
+            rutaInicial = isLoggedIn ? '/bienvenida' : '/web_sesion_registro';
           } else {
-            initialRoute = isLoggedIn ? '/bienvenida' : '/splash';
+            rutaInicial = isLoggedIn ? '/bienvenida' : '/splash';
           }
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: initialRoute,
+            initialRoute: rutaInicial,
             routes: <String, WidgetBuilder>{
-              '/splash': (context) => const SplashPage(),
-              '/start': (context) => const StartPage(),
-              '/informacion': (context) => const InformationPage(),
+              '/splash': (context) => const PantallaSplash(),
+              '/start': (context) => const PantallaInicio(),
+              '/informacion': (context) => const PantallaInformacion(),
               '/servicios': (context) => const ServicesPage(),
               '/iniciar_sesion': (context) => const IniciarSesionPage(),
               '/iniciar_contrasenia': (context) => const IniciarContraseniaPage(),
@@ -157,7 +157,7 @@ class MaterialAppWithTheme extends StatelessWidget {
     );
   }
 
-  Future<Map<String, dynamic>> _checkLoginStatus() async {
+  Future<Map<String, dynamic>> _comprobarEstadoDeLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 

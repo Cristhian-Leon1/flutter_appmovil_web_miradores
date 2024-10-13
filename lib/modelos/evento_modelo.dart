@@ -25,7 +25,7 @@ class EventoModel {
       descripcion: data['descripcion'] ?? '',
       image: data['image'],
       fecha: data['fecha'] != null ? DateTime.parse(data['fecha']) : null,
-      userId: data['userId'], // Parsear el userId
+      userId: data['userId'],
     );
   }
 

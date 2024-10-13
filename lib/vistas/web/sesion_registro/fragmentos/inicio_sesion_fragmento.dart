@@ -2,14 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/widgets/textfield_personalizable.dart';
 import 'package:pueblito_viajero/vistas/android/iniciar_sesion/widgets/textfield_contrasenia.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
 import '../../../../provider/panel_perfil_provider.dart';
-import '../../../../provider/registro_provider.dart';
+import '../../../../provider/screen_registro_provider.dart';
 
 class InicioSesionFragmento extends StatelessWidget {
   const InicioSesionFragmento({super.key});

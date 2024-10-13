@@ -12,7 +12,7 @@ class IconoTextSplash extends StatelessWidget {
       TextSpan(
         style: GoogleFonts.inter(
           fontSize: kIsWeb ? 28 : 33,
-          color: AppColors.black87,
+          color: AppColors.negro87,
           letterSpacing: 2,
           height: 1.03,
         ),

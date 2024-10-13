@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/start_provider.dart';
+import 'package:pueblito_viajero/provider/screen_start_provider.dart';
 import 'package:pueblito_viajero/vistas/android/start/widgets/container_opciones.dart';
 import 'package:pueblito_viajero/vistas/android/start/widgets/text_pueblito_viajero.dart';
 
-class StartPage extends StatefulWidget {
-  const StartPage({super.key});
+class PantallaInicio extends StatefulWidget {
+  const PantallaInicio({super.key});
 
   @override
-  _StartPageState createState() => _StartPageState();
+  _PantallaInicioState createState() => _PantallaInicioState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _PantallaInicioState extends State<PantallaInicio> {
   @override
   void initState() {
     super.initState();

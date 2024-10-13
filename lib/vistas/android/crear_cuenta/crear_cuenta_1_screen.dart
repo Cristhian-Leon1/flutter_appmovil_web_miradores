@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/registro_provider.dart';
+import 'package:pueblito_viajero/provider/screen_registro_provider.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/widgets/textfield_personalizable.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 

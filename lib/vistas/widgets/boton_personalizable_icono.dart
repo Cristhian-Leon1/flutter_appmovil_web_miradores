@@ -35,7 +35,7 @@ class BotonConIconoIzquierda extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Icon(
                 icon,
-                color: AppColors.white,
+                color: AppColors.blanco,
                 size: 33,
               ),
             ),

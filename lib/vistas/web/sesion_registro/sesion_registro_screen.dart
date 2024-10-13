@@ -4,7 +4,7 @@ import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/crear_cue
 import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/inicio_sesion_fragmento.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/text_logo_fragmento.dart';
 
-import '../../../provider/iniciar_sesion_provider.dart';
+import '../../../provider/screen_iniciar_sesion_provider.dart';
 
 class WebSesionRegistroScreen extends StatelessWidget {
   const WebSesionRegistroScreen({super.key});

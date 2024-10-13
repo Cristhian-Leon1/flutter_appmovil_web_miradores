@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/android/iniciar_sesion/widgets/textfield_contrasenia.dart';
 
-import '../../../provider/iniciar_sesion_provider.dart';
+import '../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../utils/custom/custom_colors.dart';
 import '../../widgets/boton_personalizable.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../servicios/usuario_service.dart';
-import 'iniciar_sesion_provider.dart';
+import '../servicios/usuario_servicio.dart';
+import 'screen_iniciar_sesion_provider.dart';
 
 class PerfilProvider with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();

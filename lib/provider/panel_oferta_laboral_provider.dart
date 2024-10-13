@@ -5,9 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../modelos/oferta_laboral_modelo.dart';
-import '../servicios/mirador_service.dart';
-import '../servicios/oferta_laboral_service.dart';
-import 'iniciar_sesion_provider.dart';
+import '../servicios/mirador_servicio.dart';
+import '../servicios/oferta_laboral_servicio.dart';
+import 'screen_iniciar_sesion_provider.dart';
 
 class OfertaLaboralProvider with ChangeNotifier {
   dynamic image;

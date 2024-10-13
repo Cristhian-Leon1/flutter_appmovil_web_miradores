@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/provider/panel_mirador_provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/card_meses.dart';
 import 'package:pueblito_viajero/vistas/widgets/grafica.dart';

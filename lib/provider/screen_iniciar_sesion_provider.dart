@@ -8,7 +8,7 @@ import 'package:pueblito_viajero/vistas/android/iniciar_sesion/iniciar_sesion_sc
 import 'package:pueblito_viajero/vistas/web/sesion_registro/sesion_registro_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../modelos/usuario_model.dart';
-import '../servicios/autenticacion_service.dart';
+import '../servicios/autenticacion_servicio.dart';
 import '../vistas/android/bienvenida/bienvenida_screen.dart';
 import '../vistas/android/start/start_screen.dart';
 import 'fragmento_home_provider.dart';
@@ -151,7 +151,7 @@ class IniciarSesionProvider with ChangeNotifier {
     homeProvider.resetVariables();
 
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const StartPage()),
+      MaterialPageRoute(builder: (context) => kIsWeb ? const WebSesionRegistroScreen() :const PantallaInicio()),
           (Route<dynamic> route) => false,
     );
   }

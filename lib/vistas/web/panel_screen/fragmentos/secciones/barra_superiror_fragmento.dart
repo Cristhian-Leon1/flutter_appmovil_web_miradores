@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_inicio_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
 import '../../../../provider/panel_mirador_provider.dart';
 import '../fragmentos/secciones/imagenes_mirador.dart';
 

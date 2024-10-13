@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_perfil_provider.dart';
 
 class SeleccionOpcionesPerfil extends StatelessWidget {

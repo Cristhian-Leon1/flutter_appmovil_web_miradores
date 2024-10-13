@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pueblito_viajero/vistas/android/home/fragmentos/miradores.dart';
 
-class InformationPage extends StatelessWidget {
-  const InformationPage({super.key});
+class PantallaInformacion extends StatelessWidget {
+  const PantallaInformacion({super.key});
 
   @override
   Widget build(BuildContext context) {

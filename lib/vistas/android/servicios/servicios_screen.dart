@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 
-import '../../../provider/servicios_provider.dart';
+import '../../../provider/screen_servicios_provider.dart';
 import '../../widgets/boton_personalizable.dart';
 import '../../widgets/boton_sesion_redes.dart';
 

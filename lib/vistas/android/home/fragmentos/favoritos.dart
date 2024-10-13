@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
-import 'package:pueblito_viajero/servicios/mirador_service.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/servicios/mirador_servicio.dart';
 import 'package:pueblito_viajero/vistas/android/home/widgets/card_miradores.dart';
 import 'package:pueblito_viajero/modelos/mirador_modelo.dart';
 

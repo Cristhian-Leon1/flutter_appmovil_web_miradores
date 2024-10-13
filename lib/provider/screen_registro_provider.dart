@@ -6,11 +6,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import '../modelos/usuario_model.dart';
-import '../servicios/usuario_service.dart';
+import '../servicios/usuario_servicio.dart';
 import '../utils/custom/custom_colors.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
 import '../vistas/android/iniciar_sesion/iniciar_sesion_screen.dart';
-import 'iniciar_sesion_provider.dart';
+import 'screen_iniciar_sesion_provider.dart';
 
 class RegistroProvider with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();

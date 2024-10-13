@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/widgets/textfield_personalizable.dart';
 
-import '../../../provider/registro_provider.dart';
+import '../../../provider/screen_registro_provider.dart';
 import '../../../utils/custom/custom_colors.dart';
 import '../../widgets/boton_personalizable.dart';
 

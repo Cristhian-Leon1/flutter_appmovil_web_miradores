@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../modelos/evento_modelo.dart';
-import '../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../provider/panel_eventos_provider.dart';
 import '../../../../utils/custom/custom_colors.dart';
 

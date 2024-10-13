@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/registro_provider.dart';
+import 'package:pueblito_viajero/provider/screen_registro_provider.dart';
 import 'package:pueblito_viajero/vistas/android/crear_cuenta/widgets/textfield_personalizable.dart';
 
 class CapturaInformacionRegistroFragmento extends StatelessWidget {
@@ -37,7 +37,7 @@ class CapturaInformacionRegistroFragmento extends StatelessWidget {
           hintText: 'Contraseña',
           icon: Icons.key_outlined,
           controller: registroProvider.passwordController,
-          keyboard: 'email',
+          keyboard: 'password',
           focusNode: registroProvider.passwordFocusNode,
           type: '1',
         ),

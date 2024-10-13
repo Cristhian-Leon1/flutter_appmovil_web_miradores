@@ -4,10 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../modelos/mirador_modelo.dart';
-import '../servicios/mirador_service.dart';
-import '../servicios/storage_service.dart';
+import '../servicios/mirador_servicio.dart';
+import '../servicios/almacenamiento_servicio.dart';
 import '../utils/funciones/funcion_galeria_modelo.dart';
-import 'iniciar_sesion_provider.dart';
+import 'screen_iniciar_sesion_provider.dart';
 
 class PanelMiradorProvider with ChangeNotifier {
   final TextEditingController nameController = TextEditingController();

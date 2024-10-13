@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../provider/registro_provider.dart';
+import '../../../../provider/screen_registro_provider.dart';
 import '../../../../utils/custom/custom_colors.dart';
 import '../../../widgets/boton_personalizable_icono.dart';
 

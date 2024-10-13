@@ -6,7 +6,7 @@ import 'package:pueblito_viajero/vistas/web/panel_screen/fragmentos/secciones/mi
 import 'package:pueblito_viajero/vistas/web/panel_screen/fragmentos/secciones/servicios.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/mirador_slider.dart';
 
-import '../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../provider/panel_mirador_provider.dart';
 import '../widgets/editar.dart';
 import '../widgets/card_mapa_stub.dart';

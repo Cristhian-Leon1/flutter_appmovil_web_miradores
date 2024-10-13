@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
-import 'package:pueblito_viajero/servicios/storage_service.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/servicios/almacenamiento_servicio.dart';
 import '../modelos/mirador_modelo.dart';
 import '../provider/panel_mirador_provider.dart';
 

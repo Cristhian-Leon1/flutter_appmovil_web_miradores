@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/modelos/evento_modelo.dart';
-import 'package:pueblito_viajero/servicios/evento_service.dart';
+import 'package:pueblito_viajero/servicios/evento_servicio.dart';
 
 import '../utils/funciones/funcion_galeria_modelo.dart';
-import 'iniciar_sesion_provider.dart';
+import 'screen_iniciar_sesion_provider.dart';
 
 class EventosProvider with ChangeNotifier {
   final TextEditingController nombreController = TextEditingController();

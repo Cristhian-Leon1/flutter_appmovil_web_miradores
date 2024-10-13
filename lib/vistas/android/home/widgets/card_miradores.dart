@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../modelos/mirador_modelo.dart';
 import '../../../../provider/fragmento_miradores_provider.dart';
-import '../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../fragmentos/secciones/mirador_informacion.dart';
 
 class CardMirador extends StatelessWidget {

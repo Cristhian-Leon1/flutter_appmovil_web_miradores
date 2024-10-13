@@ -1,5 +1,5 @@
 import '../modelos/mirador_modelo.dart';
-import '../servicios/mirador_service.dart';
+import '../servicios/mirador_servicio.dart';
 import 'package:flutter/material.dart';
 
 class MiradoresFragmentoProvider with ChangeNotifier {

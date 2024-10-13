@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pueblito_viajero/servicios/storage_service.dart';
+import 'package:pueblito_viajero/servicios/almacenamiento_servicio.dart';
 import '../modelos/evento_modelo.dart';
 
 class EventoService {

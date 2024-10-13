@@ -1,16 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:pueblito_viajero/vistas/widgets/icono_text_splash.dart';
 
-class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+class PantallaSplash extends StatefulWidget {
+  const PantallaSplash({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  State<PantallaSplash> createState() => _PantallaSplashState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _PantallaSplashState extends State<PantallaSplash> {
   @override
   void initState() {
     super.initState();

@@ -4,7 +4,7 @@ import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/editar.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 import 'package:pueblito_viajero/vistas/widgets/boton_personalizable.dart';
 
-import '../../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 import '../../../../../utils/custom/custom_colors.dart';
 

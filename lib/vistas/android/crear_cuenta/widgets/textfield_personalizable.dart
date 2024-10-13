@@ -52,6 +52,7 @@ class TextFieldPersonalizable extends StatelessWidget {
           ),
           child: TextField(
             focusNode: focusNode,
+            obscureText: keyboard == 'password' ? true : false,
             controller: controller,
             keyboardType: keyboard == 'email' ? TextInputType.emailAddress :
                           keyboard == 'password' ? TextInputType.emailAddress :

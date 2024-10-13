@@ -33,7 +33,7 @@ class PanelScreen extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: Container(
-                  color: AppColors.white,
+                  color: AppColors.blanco,
                   child: Row(
                     children: <Widget>[
                       const Expanded(

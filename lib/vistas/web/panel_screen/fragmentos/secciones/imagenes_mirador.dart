@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../../provider/panel_mirador_provider.dart';
 import '../../widgets/editar.dart';
 import 'dart:typed_data';

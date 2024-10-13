@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/fragmentos/secciones/formulario_perfil.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/fragmentos/secciones/seleccion_opciones_perfil.dart';
 
-import '../../../../provider/iniciar_sesion_provider.dart';
+import '../../../../provider/screen_iniciar_sesion_provider.dart';
 import '../../../../provider/panel_perfil_provider.dart';
 import '../../../../utils/custom/custom_colors.dart';
 

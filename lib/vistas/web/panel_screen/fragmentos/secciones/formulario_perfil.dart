@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pueblito_viajero/provider/iniciar_sesion_provider.dart';
+import 'package:pueblito_viajero/provider/screen_iniciar_sesion_provider.dart';
 import 'package:pueblito_viajero/utils/custom/custom_colors.dart';
 import 'package:pueblito_viajero/vistas/web/panel_screen/widgets/textfield_mirador.dart';
 import 'package:pueblito_viajero/vistas/web/sesion_registro/fragmentos/inicio_sesion_fragmento.dart';
