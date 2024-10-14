@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../../../../modelos/evento_modelo.dart';
-import '../../../../../provider/screen_iniciar_sesion_provider.dart';
-import '../../../../../provider/panel_eventos_provider.dart';
-import '../../../../../utils/custom/custom_colors.dart';
+import '../../../../modelos/evento_modelo.dart';
+import '../../../../provider/screen_iniciar_sesion_provider.dart';
+import '../../../../provider/panel_eventos_provider.dart';
+import '../../../../utils/custom/custom_colors.dart';
 
 class CalendarioInteractivo extends StatelessWidget {
   const CalendarioInteractivo({super.key});
